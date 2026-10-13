@@ -1,0 +1,160 @@
+{
+  "experiment_name": "generalization_and_channel_mismatch",
+  "snr_db": 15.0,
+  "num_trials": 15,
+  "test_seed": 100041,
+  "conditions": [
+    {
+      "condition": "PDP Decay 0.8",
+      "tag": "Mismatch (Decay 0.8)",
+      "pdp_decay": 0.8,
+      "num_channel_taps": 4,
+      "in_distribution": false,
+      "snr_db": 15.0,
+      "metrics": {
+        "LS": {
+          "nmse_db": -24.006209477879242,
+          "nmse": 0.003975383695733622,
+          "ber": 0.026084183673469388,
+          "bit_errors": 1227,
+          "total_bits": 47040
+        },
+        "MMSE": {
+          "nmse_db": -20.21586383287161,
+          "nmse": 0.009515105692039139,
+          "ber": 0.028316326530612244,
+          "bit_errors": 1332,
+          "total_bits": 47040
+        },
+        "DNN": {
+          "nmse_db": -21.62170601430986,
+          "nmse": 0.006883818301062082,
+          "ber": 0.030399659863945577,
+          "bit_errors": 1430,
+          "total_bits": 47040
+        },
+        "PERFECT": {
+          "nmse_db": -120.0,
+          "nmse": 0.0,
+          "ber": 0.02374574829931973,
+          "bit_errors": 1117,
+          "total_bits": 47040
+        }
+      }
+    },
+    {
+      "condition": "PDP Decay 1.5",
+      "tag": "In-Distribution (Decay 1.5)",
+      "pdp_decay": 1.5,
+      "num_channel_taps": 4,
+      "in_distribution": true,
+      "snr_db": 15.0,
+      "metrics": {
+        "LS": {
+          "nmse_db": -23.99540942459543,
+          "nmse": 0.003985281998953243,
+          "ber": 0.02886904761904762,
+          "bit_errors": 1358,
+          "total_bits": 47040
+        },
+        "MMSE": {
+          "nmse_db": -21.16235638622357,
+          "nmse": 0.007651813237233603,
+          "ber": 0.030165816326530613,
+          "bit_errors": 1419,
+          "total_bits": 47040
+        },
+        "DNN": {
+          "nmse_db": -21.59277221134513,
+          "nmse": 0.00692983316055626,
+          "ber": 0.029783163265306122,
+          "bit_errors": 1401,
+          "total_bits": 47040
+        },
+        "PERFECT": {
+          "nmse_db": -120.0,
+          "nmse": 0.0,
+          "ber": 0.02568027210884354,
+          "bit_errors": 1208,
+          "total_bits": 47040
+        }
+      }
+    },
+    {
+      "condition": "PDP Decay 2.5",
+      "tag": "Mismatch (Decay 2.5)",
+      "pdp_decay": 2.5,
+      "num_channel_taps": 4,
+      "in_distribution": false,
+      "snr_db": 15.0,
+      "metrics": {
+        "LS": {
+          "nmse_db": -23.9901421380241,
+          "nmse": 0.003990118430935033,
+          "ber": 0.029379251700680273,
+          "bit_errors": 1382,
+          "total_bits": 47040
+        },
+        "MMSE": {
+          "nmse_db": -21.581210324253792,
+          "nmse": 0.006948306500157841,
+          "ber": 0.029846938775510205,
+          "bit_errors": 1404,
+          "total_bits": 47040
+        },
+        "DNN": {
+          "nmse_db": -21.543150743789788,
+          "nmse": 0.007009465872778236,
+          "ber": 0.03142006802721088,
+          "bit_errors": 1478,
+          "total_bits": 47040
+        },
+        "PERFECT": {
+          "nmse_db": -120.0,
+          "nmse": 0.0,
+          "ber": 0.026360544217687076,
+          "bit_errors": 1240,
+          "total_bits": 47040
+        }
+      }
+    },
+    {
+      "condition": "6 Taps Dispersion",
+      "tag": "Dispersion Mismatch (6 Taps)",
+      "pdp_decay": 1.5,
+      "num_channel_taps": 6,
+      "in_distribution": false,
+      "snr_db": 15.0,
+      "metrics": {
+        "LS": {
+          "nmse_db": -9.378620920764538,
+          "nmse": 0.11538195889834055,
+          "ber": 0.1186437074829932,
+          "bit_errors": 5581,
+          "total_bits": 47040
+        },
+        "MMSE": {
+          "nmse_db": -9.685369980461344,
+          "nmse": 0.10751350045043018,
+          "ber": 0.11719812925170069,
+          "bit_errors": 5513,
+          "total_bits": 47040
+        },
+        "DNN": {
+          "nmse_db": -9.387787114497133,
+          "nmse": 0.11513869122605017,
+          "ber": 0.12130102040816326,
+          "bit_errors": 5706,
+          "total_bits": 47040
+        },
+        "PERFECT": {
+          "nmse_db": -120.0,
+          "nmse": 0.0,
+          "ber": 0.03142006802721088,
+          "bit_errors": 1478,
+          "total_bits": 47040
+        }
+      }
+    }
+  ]
+}
