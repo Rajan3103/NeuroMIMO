@@ -246,37 +246,6 @@ GET    /api/experiments/benchmark/snr-sweep --> Pre-computed 105-trial Monte Car
 
 ---
 
-### 🎓 `VIVA_VOCE // DEFENSE & TECHNICAL CHEATSHEET`
-
-```console
-[VIVA-Q1] Why does Least Squares (LS) suffer from noise enhancement at low SNR?
-          └─ LS performs element-wise division H_LS[p] = Y[p]/X[p] = H[p] + W[p]/X[p]. Because noise
-             is divided only by pilot power without Bayesian regularization, noise power equals σ²/|X_p|².
-             At low SNR, this causes severe variance that propagates into the spatial equalizer.
-
-[VIVA-Q2] What is the primary hardware bottleneck of Linear MMSE?
-          └─ LMMSE requires exact knowledge of channel autocorrelation R_HH and noise power σ².
-             It also requires an online matrix inversion (R_PP + σ² I)⁻¹ of complexity O(N_p³),
-             which is computationally prohibitive for high bandwidths and dynamic channel conditions.
-
-[VIVA-Q3] Why is a Residual Neural Network formulation preferred over direct prediction?
-          └─ Direct prediction forces the network to learn both fundamental channel structure and noise filtering.
-             The residual model H_DNN = H_LS + f_θ(H_LS) learns only the perturbation ΔH = H_true - H_LS.
-             With zero-initialized weights, the model starts at LS baseline accuracy and incrementally denoises it.
-
-[VIVA-Q4] How is data leakage prevented during neural network training?
-          └─ 1. Splits are performed strictly at the channel realization level before extracting features.
-             2. Feature inputs (X) contain only received noisy pilot observations.
-             3. Ground-truth channel coefficients H_true are strictly reserved as the loss target (y).
-
-[VIVA-Q5] What is the mathematical significance of the Poisson rule of three?
-          └─ In Monte Carlo simulations, zero observed bit errors yields an empirical BER of 0.
-             However, zero observed errors in finite trials does not prove error probability is 0.
-             The Poisson rule of three provides a rigorous 95% confidence upper bound: P(E) < 3.0 / N_bits.
-```
-
----
-
 ### 📄 `LICENSE // MIT`
 
 ```console
