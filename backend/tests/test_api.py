@@ -213,7 +213,12 @@ def test_api_model_status():
     assert "device" in data
 
 
-def test_api_model_train_synchronous_smoke():
+def test_api_model_train_synchronous_smoke(tmp_path, monkeypatch):
+    # Save the smoke-test model to a temp file so the trained checkpoint
+    # committed in backend/models/ is never overwritten.
+    smoke_ckpt = str(tmp_path / "smoke_dnn.pt")
+    monkeypatch.setattr("neuromimo.api.main.CHECKPOINT_PATH", smoke_ckpt)
+
     payload = {
         "epochs": 2,
         "batch_size": 16,
@@ -231,6 +236,7 @@ def test_api_model_train_synchronous_smoke():
     assert len(data["history"]) == 2
     assert data["checkpoint_saved"] is True
     assert os.path.exists(data["checkpoint_path"])
+    assert os.path.abspath(data["checkpoint_path"]) == smoke_ckpt
 
 
 def test_api_model_train_invalid_snr_range():

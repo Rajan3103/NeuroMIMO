@@ -18,20 +18,26 @@ const API_BASE = '/api';
 
 async function fetchJson<T>(url: string, options?: RequestInit): Promise<T> {
   const response = await fetch(url, {
+    ...options,
     headers: {
       'Content-Type': 'application/json',
       ...options?.headers,
     },
-    ...options,
   });
 
   if (!response.ok) {
     let errorMessage = `API Error [${response.status}]`;
+    // A response body can only be read once, so read it as text and parse it here.
+    const errorText = await response.text();
     try {
-      const errorJson = await response.json();
-      errorMessage = errorJson.detail || errorMessage;
+      const errorJson = JSON.parse(errorText);
+      const detail = errorJson.detail;
+      if (typeof detail === 'string') {
+        errorMessage = detail;
+      } else if (detail) {
+        errorMessage = JSON.stringify(detail);
+      }
     } catch {
-      const errorText = await response.text();
       errorMessage = errorText || response.statusText || errorMessage;
     }
     throw new Error(errorMessage);
