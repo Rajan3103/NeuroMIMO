@@ -253,9 +253,9 @@ export const ChannelEstimationPage: React.FC = () => {
                 <div className="h-60 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={results} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="algorithm" stroke="#64748b" tick={{ fontSize: 11, fill: '#cbd5e1' }} />
-                      <YAxis stroke="#64748b" tick={{ fontSize: 10 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                      <XAxis dataKey="algorithm" stroke="var(--chart-axis)" tick={{ fontSize: 11, fill: 'var(--chart-tick)' }} />
+                      <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 10 }} />
                       <Tooltip
                         content={({ payload }) => {
                           if (!payload || !payload.length) return null;
@@ -281,9 +281,9 @@ export const ChannelEstimationPage: React.FC = () => {
                 <div className="h-60 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={results} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="algorithm" stroke="#64748b" tick={{ fontSize: 11, fill: '#cbd5e1' }} />
-                      <YAxis stroke="#64748b" tick={{ fontSize: 10 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                      <XAxis dataKey="algorithm" stroke="var(--chart-axis)" tick={{ fontSize: 11, fill: 'var(--chart-tick)' }} />
+                      <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 10 }} />
                       <Tooltip
                         content={({ payload }) => {
                           if (!payload || !payload.length) return null;
@@ -351,15 +351,15 @@ export const ChannelEstimationPage: React.FC = () => {
             <div className="h-64 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={subcarrierComparisonData} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
                   <XAxis
                     dataKey="subcarrier"
-                    stroke="#64748b"
+                    stroke="var(--chart-axis)"
                     tick={{ fontSize: 10 }}
                     label={{ value: 'Subcarrier Index k', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 10 }}
                   />
                   <YAxis
-                    stroke="#64748b"
+                    stroke="var(--chart-axis)"
                     tick={{ fontSize: 10 }}
                     label={{ value: '|H[k]| Magnitude', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }}
                   />

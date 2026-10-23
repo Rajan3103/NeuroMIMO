@@ -420,13 +420,13 @@ export const SimulatorPage: React.FC = () => {
               <div className="h-64 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
                 <ResponsiveContainer width="100%" height="100%">
                   <ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
                     <XAxis
                       type="number"
                       dataKey="i"
                       name="In-Phase (I)"
                       domain={[-2, 2]}
-                      stroke="#64748b"
+                      stroke="var(--chart-axis)"
                       tick={{ fontSize: 10 }}
                     />
                     <YAxis
@@ -434,7 +434,7 @@ export const SimulatorPage: React.FC = () => {
                       dataKey="q"
                       name="Quadrature (Q)"
                       domain={[-2, 2]}
-                      stroke="#64748b"
+                      stroke="var(--chart-axis)"
                       tick={{ fontSize: 10 }}
                     />
                     <Tooltip
@@ -487,15 +487,15 @@ export const SimulatorPage: React.FC = () => {
                         <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                    <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
                     <XAxis
                       dataKey="subcarrier"
-                      stroke="#64748b"
+                      stroke="var(--chart-axis)"
                       tick={{ fontSize: 10 }}
                       label={{ value: 'Subcarrier Index k', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 10 }}
                     />
                     <YAxis
-                      stroke="#64748b"
+                      stroke="var(--chart-axis)"
                       tick={{ fontSize: 10 }}
                       label={{ value: '|H[k]| Magnitude', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }}
                     />

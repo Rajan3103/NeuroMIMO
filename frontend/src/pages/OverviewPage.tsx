@@ -59,7 +59,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="glass-panel p-6 sm:p-8 border-cyan-900/30 bg-gradient-to-r from-slate-900/90 via-[#111827]/90 to-slate-900/90 relative overflow-hidden">
+      <div className="glass-panel p-6 sm:p-8 border-cyan-900/30 bg-gradient-to-r from-slate-900/90 via-panel/90 to-slate-900/90 relative overflow-hidden">
         <div className="relative z-10 max-w-3xl">
           <Badge variant="cyan" className="mb-3" dot>
             FINAL-YEAR ENGINEERING CAPSTONE
@@ -182,9 +182,9 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             <div className="h-44 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis type="number" dataKey="i" domain={[-2, 2]} stroke="#64748b" tick={{ fontSize: 9 }} />
-                  <YAxis type="number" dataKey="q" domain={[-2, 2]} stroke="#64748b" tick={{ fontSize: 9 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                  <XAxis type="number" dataKey="i" domain={[-2, 2]} stroke="var(--chart-axis)" tick={{ fontSize: 9 }} />
+                  <YAxis type="number" dataKey="q" domain={[-2, 2]} stroke="var(--chart-axis)" tick={{ fontSize: 9 }} />
                   <Tooltip
                     cursor={{ strokeDasharray: '3 3' }}
                     content={({ payload }) => {

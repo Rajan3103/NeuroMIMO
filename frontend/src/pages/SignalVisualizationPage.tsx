@@ -246,13 +246,13 @@ export const SignalVisualizationPage: React.FC = () => {
           <div className="h-72 w-full bg-slate-950/60 rounded-xl border border-slate-800/80 p-2">
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
                 <XAxis
                   type="number"
                   dataKey="i"
                   name="In-Phase (I)"
                   domain={[-2.5, 2.5]}
-                  stroke="#64748b"
+                  stroke="var(--chart-axis)"
                   fontSize={10}
                   tickCount={5}
                 />
@@ -261,7 +261,7 @@ export const SignalVisualizationPage: React.FC = () => {
                   dataKey="q"
                   name="Quadrature (Q)"
                   domain={[-2.5, 2.5]}
-                  stroke="#64748b"
+                  stroke="var(--chart-axis)"
                   fontSize={10}
                   tickCount={5}
                 />
@@ -269,8 +269,8 @@ export const SignalVisualizationPage: React.FC = () => {
                 <Tooltip
                   cursor={{ strokeDasharray: '3 3' }}
                   contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
+                    backgroundColor: 'var(--tooltip-bg)',
+                    borderColor: 'var(--tooltip-border)',
                     borderRadius: '8px',
                     fontSize: '11px',
                   }}
@@ -324,13 +324,13 @@ export const SignalVisualizationPage: React.FC = () => {
                       <stop offset="95%" stopColor="#a855f7" stopOpacity={0.0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis dataKey="subcarrier" stroke="#64748b" fontSize={10} unit=" k" />
-                  <YAxis stroke="#64748b" fontSize={10} domain={[0, 'auto']} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                  <XAxis dataKey="subcarrier" stroke="var(--chart-axis)" fontSize={10} unit=" k" />
+                  <YAxis stroke="var(--chart-axis)" fontSize={10} domain={[0, 'auto']} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#0f172a',
-                      borderColor: '#334155',
+                      backgroundColor: 'var(--tooltip-bg)',
+                      borderColor: 'var(--tooltip-border)',
                       borderRadius: '8px',
                       fontSize: '11px',
                     }}
@@ -348,13 +348,13 @@ export const SignalVisualizationPage: React.FC = () => {
                 </AreaChart>
               ) : (
                 <LineChart data={channelData} margin={{ top: 10, right: 20, left: 0, bottom: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis dataKey="subcarrier" stroke="#64748b" fontSize={10} unit=" k" />
-                  <YAxis stroke="#64748b" fontSize={10} domain={[-Math.PI, Math.PI]} unit=" rad" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                  <XAxis dataKey="subcarrier" stroke="var(--chart-axis)" fontSize={10} unit=" k" />
+                  <YAxis stroke="var(--chart-axis)" fontSize={10} domain={[-Math.PI, Math.PI]} unit=" rad" />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#0f172a',
-                      borderColor: '#334155',
+                      backgroundColor: 'var(--tooltip-bg)',
+                      borderColor: 'var(--tooltip-border)',
                       borderRadius: '8px',
                       fontSize: '11px',
                     }}
@@ -390,13 +390,13 @@ export const SignalVisualizationPage: React.FC = () => {
           <div className="h-60 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={pdpTaps} margin={{ top: 10, right: 10, left: 0, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                <XAxis dataKey="tap" stroke="#64748b" fontSize={10} />
-                <YAxis stroke="#64748b" fontSize={10} domain={[0, 1.1]} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                <XAxis dataKey="tap" stroke="var(--chart-axis)" fontSize={10} />
+                <YAxis stroke="var(--chart-axis)" fontSize={10} domain={[0, 1.1]} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
+                    backgroundColor: 'var(--tooltip-bg)',
+                    borderColor: 'var(--tooltip-border)',
                     borderRadius: '8px',
                     fontSize: '11px',
                   }}

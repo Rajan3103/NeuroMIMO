@@ -58,7 +58,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const sidebarContent = (
-    <div className="h-full flex flex-col justify-between p-4 bg-[#0B0F19]/95 border-r border-slate-800/80 w-64">
+    <div className="h-full flex flex-col justify-between p-4 bg-page/95 border-r border-slate-800/80 w-64">
       <div className="space-y-6">
         <div className="flex items-center justify-between md:hidden pb-2 border-b border-slate-800">
           <span className="text-xs font-bold text-white tracking-wider uppercase">Navigation</span>
@@ -86,13 +86,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   onClick={() => handleItemClick(item.id)}
                   className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                     isActive
-                      ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-sm shadow-cyan-950/40'
-                      : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+                      ? 'bg-cyan-500/10 text-cyan-400 border border-transparent border-l-[3px] border-l-cyan-500'
+                      : 'text-slate-400 border border-transparent hover:text-slate-200 hover:bg-slate-800/50'
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`w-4 h-4 ${isActive ? 'text-cyan-400' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
+                    <span className="text-left">{item.label}</span>
                   </div>
                   {item.tag && (
                     <span className="text-[10px] px-1.5 py-0.5 rounded bg-purple-500/10 border border-purple-500/30 text-purple-400 font-mono">
@@ -126,7 +126,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Mobile drawer with backdrop */}
       {isMobileOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex">
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm" onClick={onCloseMobile} />
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm" onClick={onCloseMobile} />
           <div className="relative z-10 h-full">{sidebarContent}</div>
         </div>
       )}

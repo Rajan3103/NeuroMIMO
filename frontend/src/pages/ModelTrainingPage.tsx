@@ -451,23 +451,23 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={history} margin={{ top: 10, right: 30, left: 10, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
                 <XAxis
                   dataKey="epoch"
-                  stroke="#64748b"
+                  stroke="var(--chart-axis)"
                   fontSize={11}
                   tickFormatter={(val) => `Ep ${val}`}
                 />
                 <YAxis
-                  stroke="#64748b"
+                  stroke="var(--chart-axis)"
                   fontSize={11}
                   domain={['auto', 'auto']}
                   tickFormatter={(val) => (typeof val === 'number' ? val.toExponential(2) : val)}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
+                    backgroundColor: 'var(--tooltip-bg)',
+                    borderColor: 'var(--tooltip-border)',
                     borderRadius: '8px',
                     fontSize: '11px',
                   }}
