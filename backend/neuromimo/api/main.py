@@ -78,6 +78,13 @@ from ..estimation.trainer import (
 )
 
 CHECKPOINT_PATH = os.path.abspath(DEFAULT_CHECKPOINT_PATH)
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.environ.get(
+        "NEUROMIMO_CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173"
+    ).split(",")
+    if origin.strip()
+]
 RESULTS_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "results")
 )
@@ -278,7 +285,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
