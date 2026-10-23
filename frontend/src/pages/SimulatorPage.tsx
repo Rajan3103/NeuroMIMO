@@ -103,7 +103,7 @@ export const SimulatorPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-fg tracking-tight">MIMO-OFDM Simulation Studio</h2>
+          <h2 className="text-xl font-bold text-white tracking-tight">MIMO-OFDM Simulation Studio</h2>
           <p className="text-xs text-slate-400">
             Configure transmission parameters, channel conditions, and receiver estimation algorithms.
           </p>
@@ -135,7 +135,7 @@ export const SimulatorPage: React.FC = () => {
         <div className="glass-panel p-5 space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
             <Sliders className="w-4 h-4 text-cyan-400" />
-            <h3 className="text-sm font-semibold text-fg">Transceiver Parameters</h3>
+            <h3 className="text-sm font-semibold text-white">Transceiver Parameters</h3>
           </div>
 
           <div className="space-y-3">
@@ -149,7 +149,7 @@ export const SimulatorPage: React.FC = () => {
                   const [tx, rx] = e.target.value.split('x').map(Number);
                   setConfig({ ...config, num_tx: tx, num_rx: rx });
                 }}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
               >
                 <option value="2x2">2 x 2 MIMO (Spatial Multiplexing)</option>
                 <option value="2x4">2 x 4 SIMO/MIMO</option>
@@ -170,7 +170,7 @@ export const SimulatorPage: React.FC = () => {
                     className={`py-2 px-3 rounded-lg text-xs font-medium border text-center transition-all ${
                       config.modulation === m
                         ? 'bg-cyan-500/10 border-cyan-500 text-cyan-400 font-bold'
-                        : 'bg-slate-900/60 border-slate-750 text-slate-400 hover:text-fg'
+                        : 'bg-slate-900/60 border-slate-750 text-slate-400 hover:text-white'
                     }`}
                   >
                     {m} {m === 'QPSK' ? '(2 bits/sym)' : '(4 bits/sym)'}
@@ -187,7 +187,7 @@ export const SimulatorPage: React.FC = () => {
                 <select
                   value={config.fft_size}
                   onChange={(e) => setConfig({ ...config, fft_size: Number(e.target.value) })}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
                 >
                   <option value={64}>64 Subcarriers</option>
                   <option value={128}>128 Subcarriers</option>
@@ -202,7 +202,7 @@ export const SimulatorPage: React.FC = () => {
                 <select
                   value={config.cp_length}
                   onChange={(e) => setConfig({ ...config, cp_length: Number(e.target.value) })}
-                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
                 >
                   <option value={16}>16 samples (1/4)</option>
                   <option value={32}>32 samples (1/2)</option>
@@ -217,7 +217,7 @@ export const SimulatorPage: React.FC = () => {
               <select
                 value={config.pilot_spacing}
                 onChange={(e) => setConfig({ ...config, pilot_spacing: Number(e.target.value) })}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
               >
                 <option value={8}>Every 8 tones (4 pilots/TX) - Nyquist rate</option>
                 <option value={4}>Every 4 tones (8 pilots/TX) - High density</option>
@@ -231,7 +231,7 @@ export const SimulatorPage: React.FC = () => {
         <div className="glass-panel p-5 space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
             <Radio className="w-4 h-4 text-purple-400" />
-            <h3 className="text-sm font-semibold text-fg">Channel & Noise Environment</h3>
+            <h3 className="text-sm font-semibold text-white">Channel & Noise Environment</h3>
           </div>
 
           <div className="space-y-4">
@@ -248,7 +248,7 @@ export const SimulatorPage: React.FC = () => {
                     className={`py-2 px-3 rounded-lg text-xs font-medium border text-center transition-all ${
                       config.channel_model === c
                         ? 'bg-purple-500/10 border-purple-500 text-purple-400 font-bold'
-                        : 'bg-slate-900/60 border-slate-750 text-slate-400 hover:text-fg'
+                        : 'bg-slate-900/60 border-slate-750 text-slate-400 hover:text-white'
                     }`}
                   >
                     {c === 'RAYLEIGH' ? 'Rayleigh Fading (4-tap)' : 'AWGN Only (Flat)'}
@@ -290,7 +290,7 @@ export const SimulatorPage: React.FC = () => {
                 max="50"
                 value={config.num_ofdm_symbols}
                 onChange={(e) => setConfig({ ...config, num_ofdm_symbols: Number(e.target.value) })}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
               />
             </div>
 
@@ -302,7 +302,7 @@ export const SimulatorPage: React.FC = () => {
                 type="number"
                 value={config.random_seed}
                 onChange={(e) => setConfig({ ...config, random_seed: Number(e.target.value) })}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
               />
             </div>
           </div>
@@ -312,7 +312,7 @@ export const SimulatorPage: React.FC = () => {
         <div className="glass-panel p-5 space-y-4">
           <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
             <Cpu className="w-4 h-4 text-emerald-400" />
-            <h3 className="text-sm font-semibold text-fg">Channel Estimator</h3>
+            <h3 className="text-sm font-semibold text-white">Channel Estimator</h3>
           </div>
 
           <div className="space-y-3">
@@ -329,7 +329,7 @@ export const SimulatorPage: React.FC = () => {
                 onClick={() => setConfig({ ...config, algorithm: algo.id })}
                 className={`p-3 rounded-lg border cursor-pointer transition-all ${
                   config.algorithm === algo.id
-                    ? 'bg-cyan-500/10 border-cyan-500 text-fg'
+                    ? 'bg-cyan-500/10 border-cyan-500 text-white'
                     : 'bg-slate-900/60 border-slate-800 text-slate-300 hover:border-slate-700'
                 }`}
               >
@@ -357,7 +357,7 @@ export const SimulatorPage: React.FC = () => {
       {result && !loading && (
         <div className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <h3 className="text-sm font-bold text-fg uppercase tracking-wider">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wider">
               Simulation Metrics @ {result.snr_db} dB SNR ({result.algorithm})
             </h3>
             <Badge variant="cyan">
@@ -403,7 +403,7 @@ export const SimulatorPage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Eye className="w-4 h-4 text-cyan-400" />
-                  <h4 className="text-xs font-bold text-fg uppercase tracking-wider">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">
                     Constellation Diagram (IQ Complex Plane)
                   </h4>
                 </div>
@@ -471,7 +471,7 @@ export const SimulatorPage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Activity className="w-4 h-4 text-emerald-400" />
-                  <h4 className="text-xs font-bold text-fg uppercase tracking-wider">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">
                     Channel Magnitude Response |H[k]| (64 Subcarriers)
                   </h4>
                 </div>
@@ -528,7 +528,7 @@ export const SimulatorPage: React.FC = () => {
           <div className="glass-panel p-6 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
               <div>
-                <h4 className="text-xs font-bold text-fg uppercase tracking-wider flex items-center gap-2">
+                <h4 className="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
                   <LineChartIcon className="w-4 h-4 text-cyan-400" />
                   <span>Benchmark Reference Ground Truth (Empirical Sweeps)</span>
                 </h4>
@@ -561,7 +561,7 @@ export const SimulatorPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <h5 className="text-xs font-bold text-fg group-hover:text-cyan-400 transition-colors">
+                  <h5 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
                     NMSE vs SNR Reference Curve
                   </h5>
                   <p className="text-[10px] text-slate-400 leading-relaxed">
@@ -591,7 +591,7 @@ export const SimulatorPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="space-y-1">
-                  <h5 className="text-xs font-bold text-fg group-hover:text-emerald-400 transition-colors">
+                  <h5 className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">
                     BER vs SNR Reference Curve
                   </h5>
                   <p className="text-[10px] text-slate-400 leading-relaxed">

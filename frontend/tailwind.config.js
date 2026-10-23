@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-// Colours come from CSS variables defined in src/index.css so the light and dark
-// themes share the same class names.
+// Colours come from CSS variables defined in src/index.css so every colour theme
+// shares the same class names.
 const fromVar = (name) => `rgb(var(--${name}) / <alpha-value>)`;
 const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 const themedPalette = (name) =>
@@ -12,7 +12,6 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -24,7 +23,6 @@ export default {
         amber: themedPalette('amber'),
         page: fromVar('page'),
         panel: fromVar('panel'),
-        fg: fromVar('fg'),
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

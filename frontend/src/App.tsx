@@ -12,17 +12,8 @@ import { ExperimentHistoryPage } from './pages/ExperimentHistoryPage';
 import { AboutPage } from './pages/AboutPage';
 import { api } from './api/client';
 import type { HealthResponse, ModelStatus } from './types';
-
-export type Theme = 'light' | 'dark';
-const THEME_STORAGE_KEY = 'neuromimo-theme';
-
-function loadSavedTheme(): Theme {
-  try {
-    return localStorage.getItem(THEME_STORAGE_KEY) === 'dark' ? 'dark' : 'light';
-  } catch {
-    return 'light';
-  }
-}
+import { applyTheme, loadSavedTheme } from './theme';
+import type { ColorTheme } from './theme';
 
 export function App() {
   const [currentTab, setCurrentTab] = useState<NavTab>('overview');
@@ -30,16 +21,11 @@ export function App() {
   const [modelStatus, setModelStatus] = useState<ModelStatus | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
-  const [theme, setTheme] = useState<Theme>(loadSavedTheme);
+  const [theme, setTheme] = useState<ColorTheme>(loadSavedTheme);
 
-  // Apply the theme class to <html> so the CSS colour variables switch everywhere
+  // Apply the theme to <html> so the CSS colour variables switch everywhere
   useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    try {
-      localStorage.setItem(THEME_STORAGE_KEY, theme);
-    } catch {
-      // Storage can be unavailable (private mode); the theme still applies for this visit
-    }
+    applyTheme(theme);
   }, [theme]);
 
   const fetchStatus = async () => {
@@ -64,14 +50,14 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-page text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
+    <div className="h-screen bg-page text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
       <Navbar
         health={health}
         loading={loading}
         onRefresh={fetchStatus}
         onToggleSidebar={() => setMobileSidebarOpen((prev) => !prev)}
         theme={theme}
-        onToggleTheme={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
+        onChangeTheme={setTheme}
       />
 
       <div className="flex flex-1 overflow-hidden relative">

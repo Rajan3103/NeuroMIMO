@@ -107,7 +107,7 @@ export const SignalVisualizationPage: React.FC = () => {
             </span>
             <Badge variant="cyan">64 Subcarriers • 2×2 MIMO</Badge>
           </div>
-          <h2 className="text-xl font-bold text-fg tracking-tight">Signal & Channel Visualization</h2>
+          <h2 className="text-xl font-bold text-white tracking-tight">Signal & Channel Visualization</h2>
           <p className="text-xs text-slate-400">
             Real-time constellation IQ scatter diagrams, channel frequency response, and multipath power delay profile.
           </p>
@@ -154,7 +154,7 @@ export const SignalVisualizationPage: React.FC = () => {
           <select
             value={modulation}
             onChange={(e) => setModulation(e.target.value as ModulationType)}
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
           >
             <option value="QPSK">QPSK (2 bits/symbol)</option>
             <option value="16QAM">16-QAM (4 bits/symbol)</option>
@@ -166,7 +166,7 @@ export const SignalVisualizationPage: React.FC = () => {
           <select
             value={channelModel}
             onChange={(e) => setChannelModel(e.target.value as ChannelModelType)}
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
           >
             <option value="RAYLEIGH">Rayleigh Fading (Multipath)</option>
             <option value="AWGN">AWGN (Line-of-Sight)</option>
@@ -178,7 +178,7 @@ export const SignalVisualizationPage: React.FC = () => {
           <select
             value={algorithm}
             onChange={(e) => setAlgorithm(e.target.value as EstimationAlgorithm)}
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+            className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
           >
             <option value="DNN">PyTorch Residual DNN</option>
             <option value="MMSE">Linear MMSE</option>
@@ -229,7 +229,7 @@ export const SignalVisualizationPage: React.FC = () => {
           <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4 text-cyan-400" />
-              <h3 className="text-sm font-semibold text-fg">IQ Constellation Diagram</h3>
+              <h3 className="text-sm font-semibold text-white">IQ Constellation Diagram</h3>
             </div>
             <div className="flex items-center gap-3 text-xs font-mono">
               <span className="flex items-center gap-1.5">
@@ -288,7 +288,7 @@ export const SignalVisualizationPage: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
             <div className="flex items-center gap-2">
               <Activity className="w-4 h-4 text-purple-400" />
-              <h3 className="text-sm font-semibold text-fg">Channel Frequency Response</h3>
+              <h3 className="text-sm font-semibold text-white">Channel Frequency Response</h3>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -296,7 +296,7 @@ export const SignalVisualizationPage: React.FC = () => {
                 className={`px-2.5 py-1 rounded text-xs font-semibold ${
                   viewMode === 'magnitude'
                     ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                    : 'text-slate-400 hover:text-fg'
+                    : 'text-slate-400 hover:text-white'
                 }`}
               >
                 Magnitude |H[k]|
@@ -306,7 +306,7 @@ export const SignalVisualizationPage: React.FC = () => {
                 className={`px-2.5 py-1 rounded text-xs font-semibold ${
                   viewMode === 'phase'
                     ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                    : 'text-slate-400 hover:text-fg'
+                    : 'text-slate-400 hover:text-white'
                 }`}
               >
                 Phase ∠H[k]
@@ -380,7 +380,7 @@ export const SignalVisualizationPage: React.FC = () => {
         {/* Power Delay Profile */}
         <div className="glass-panel p-6 space-y-4 lg:col-span-1">
           <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-            <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
               <Radio className="w-4 h-4 text-cyan-400" />
               <span>Multipath Power Delay Profile</span>
             </h3>
@@ -414,7 +414,7 @@ export const SignalVisualizationPage: React.FC = () => {
         {/* 64 Subcarrier Layout Grid */}
         <div className="glass-panel p-6 space-y-4 lg:col-span-2">
           <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-            <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
               <Layers className="w-4 h-4 text-purple-400" />
               <span>OFDM Subcarrier Allocation Grid (64 Tones)</span>
             </h3>

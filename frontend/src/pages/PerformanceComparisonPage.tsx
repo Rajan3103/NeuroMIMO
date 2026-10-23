@@ -260,7 +260,7 @@ export const PerformanceComparisonPage: React.FC = () => {
             </span>
             <Badge variant="cyan">Monte Carlo Verified</Badge>
           </div>
-          <h2 className="text-xl font-bold text-fg tracking-tight">Performance Comparison Suite</h2>
+          <h2 className="text-xl font-bold text-white tracking-tight">Performance Comparison Suite</h2>
           <p className="text-xs text-slate-400">
             Systematic quantitative evaluation of Least Squares, Linear MMSE, and PyTorch Residual DNN.
           </p>
@@ -273,7 +273,7 @@ export const PerformanceComparisonPage: React.FC = () => {
               className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
                 activeTab === 'interactive'
                   ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-fg'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               Interactive Charts
@@ -283,7 +283,7 @@ export const PerformanceComparisonPage: React.FC = () => {
               className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${
                 activeTab === 'publication'
                   ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-fg'
+                  : 'text-slate-400 hover:text-white'
               }`}
             >
               Publication Figures ({plots.length})
@@ -294,7 +294,7 @@ export const PerformanceComparisonPage: React.FC = () => {
             onClick={loadBenchmarkData}
             disabled={loading || sweepRunning}
             title="Refresh benchmark data"
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-fg hover:border-slate-700 transition-colors"
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-cyan-400' : ''}`} />
           </button>
@@ -324,7 +324,7 @@ export const PerformanceComparisonPage: React.FC = () => {
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
-          <button onClick={() => setError(null)} className="text-rose-300 hover:text-fg underline text-[11px]">
+          <button onClick={() => setError(null)} className="text-rose-300 hover:text-white underline text-[11px]">
             Dismiss
           </button>
         </div>
@@ -370,7 +370,7 @@ export const PerformanceComparisonPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
                 <div className="flex items-center gap-2">
                   <LineChartIcon className="w-4 h-4 text-cyan-400" />
-                  <h3 className="text-sm font-semibold text-fg">NMSE vs SNR Waterfall</h3>
+                  <h3 className="text-sm font-semibold text-white">NMSE vs SNR Waterfall</h3>
                 </div>
                 <span className="text-[11px] font-mono text-slate-400">dB Scale (Lower is Better)</span>
               </div>
@@ -444,7 +444,7 @@ export const PerformanceComparisonPage: React.FC = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
                 <div className="flex items-center gap-2">
                   <Layers className="w-4 h-4 text-purple-400" />
-                  <h3 className="text-sm font-semibold text-fg">Bit Error Rate (BER) Waterfall</h3>
+                  <h3 className="text-sm font-semibold text-white">Bit Error Rate (BER) Waterfall</h3>
                 </div>
                 <span className="text-[11px] font-mono text-slate-400">Post-Equalization Recovery</span>
               </div>
@@ -534,7 +534,7 @@ export const PerformanceComparisonPage: React.FC = () => {
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4 text-amber-400" />
-                  <h3 className="text-sm font-semibold text-fg">Inference Latency</h3>
+                  <h3 className="text-sm font-semibold text-white">Inference Latency</h3>
                 </div>
                 <span className="text-[11px] font-mono text-slate-400">ms / OFDM Frame</span>
               </div>
@@ -564,7 +564,7 @@ export const PerformanceComparisonPage: React.FC = () => {
               <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
                 <div className="flex items-center gap-2">
                   <BarChart2 className="w-4 h-4 text-cyan-400" />
-                  <h3 className="text-sm font-semibold text-fg">Empirical Benchmark Metrics Table</h3>
+                  <h3 className="text-sm font-semibold text-white">Empirical Benchmark Metrics Table</h3>
                 </div>
                 <span className="text-[11px] text-slate-400">105 Monte Carlo Realizations</span>
               </div>
@@ -583,7 +583,7 @@ export const PerformanceComparisonPage: React.FC = () => {
                   <tbody className="divide-y divide-slate-800/60 font-mono text-[11px]">
                     {chartData.map((d) => (
                       <tr key={d.snr_db} className="text-slate-300 hover:bg-slate-800/30">
-                        <td className="py-2 font-bold text-fg">{d.snr_db} dB</td>
+                        <td className="py-2 font-bold text-white">{d.snr_db} dB</td>
                         <td className="py-2 text-orange-400">{d.LS_nmse_db ?? 'N/A'} dB</td>
                         <td className="py-2 text-emerald-400">{d.MMSE_nmse_db ?? 'N/A'} dB</td>
                         <td className="py-2 text-purple-400 font-bold">{d.DNN_nmse_db ?? 'N/A'} dB</td>
@@ -602,7 +602,7 @@ export const PerformanceComparisonPage: React.FC = () => {
           <div className="glass-panel p-6 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
               <div>
-                <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
+                <h3 className="text-sm font-semibold text-white flex items-center gap-2">
                   <BarChart2 className="w-4 h-4 text-cyan-400" />
                   <span>Verified Benchmark Publication Screenshots (300 DPI)</span>
                 </h3>
@@ -631,13 +631,13 @@ export const PerformanceComparisonPage: React.FC = () => {
                       alt={plot.name}
                       className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-fg text-[11px] font-semibold">
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white text-[11px] font-semibold">
                       <Maximize2 className="w-3.5 h-3.5 text-cyan-400" />
                       <span>Expand High-Res</span>
                     </div>
                   </div>
                   <div className="space-y-1">
-                    <h4 className="text-xs font-bold text-fg group-hover:text-cyan-400 transition-colors">
+                    <h4 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
                       {plot.name}
                     </h4>
                     <p className="text-[10px] text-slate-400 line-clamp-2">
@@ -654,7 +654,7 @@ export const PerformanceComparisonPage: React.FC = () => {
         <div className="space-y-6">
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
             <div>
-              <p className="font-semibold text-fg">Publication-Grade Matplotlib Figures (300 DPI)</p>
+              <p className="font-semibold text-white">Publication-Grade Matplotlib Figures (300 DPI)</p>
               <p className="text-[11px] text-slate-400 mt-0.5">
                 Pre-generated with vector styling, error intervals, and IEEE conference formatting. Click any figure to expand.
               </p>
@@ -676,7 +676,7 @@ export const PerformanceComparisonPage: React.FC = () => {
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"
                   />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-fg text-xs font-semibold">
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white text-xs font-semibold">
                     <Maximize2 className="w-4 h-4 text-cyan-400" />
                     <span>Expand High-Res</span>
                   </div>
@@ -684,7 +684,7 @@ export const PerformanceComparisonPage: React.FC = () => {
 
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
                   <div>
-                    <h4 className="text-xs font-bold text-fg group-hover:text-cyan-400 transition-colors">
+                    <h4 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
                       {plot.name}
                     </h4>
                     <p className="text-[11px] text-slate-400 mt-1 line-clamp-2">

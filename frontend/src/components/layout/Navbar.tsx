@@ -1,16 +1,17 @@
 import React from 'react';
-import { Radio, Cpu, RefreshCw, CheckCircle2, AlertCircle, Menu, Sun, Moon } from 'lucide-react';
+import { Radio, Cpu, RefreshCw, CheckCircle2, AlertCircle, Menu } from 'lucide-react';
 import { Badge } from '../common/Badge';
 import type { HealthResponse } from '../../types';
-import type { Theme } from '../../App';
+import { ThemePicker } from './ThemePicker';
+import type { ColorTheme } from '../../theme';
 
 interface NavbarProps {
   health: HealthResponse | null;
   loading: boolean;
   onRefresh: () => void;
   onToggleSidebar?: () => void;
-  theme: Theme;
-  onToggleTheme: () => void;
+  theme: ColorTheme;
+  onChangeTheme: (theme: ColorTheme) => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -19,10 +20,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   onRefresh,
   onToggleSidebar,
   theme,
-  onToggleTheme,
+  onChangeTheme,
 }) => {
   return (
-    <header className="h-16 border-b border-slate-800/80 bg-panel/80 backdrop-blur-md shadow-sm px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
+    <header className="h-16 border-b border-slate-800/80 bg-page/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
       <div className="flex items-center gap-3">
         {onToggleSidebar && (
           <button
@@ -72,18 +73,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           </Badge>
         )}
 
-        <button
-          onClick={onToggleTheme}
-          className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-fg transition-colors"
-          title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
-        >
-          {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-        </button>
+        <ThemePicker theme={theme} onChangeTheme={onChangeTheme} />
 
         <button
           onClick={onRefresh}
           disabled={loading}
-          className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-fg transition-colors"
+          className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-colors"
           title="Refresh backend status"
         >
           <RefreshCw

@@ -109,7 +109,7 @@ export const ExperimentHistoryPage: React.FC = () => {
               SQLite Database
             </Badge>
           </div>
-          <h2 className="text-xl font-bold text-fg tracking-tight">Experiment History</h2>
+          <h2 className="text-xl font-bold text-white tracking-tight">Experiment History</h2>
           <p className="text-xs text-slate-400">
             Persistent log of simulation runs, estimation benchmarks, and channel realizations.
           </p>
@@ -128,7 +128,7 @@ export const ExperimentHistoryPage: React.FC = () => {
           <button
             onClick={fetchHistory}
             disabled={loading}
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-fg hover:border-slate-700 transition-colors"
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-cyan-400' : ''}`} />
           </button>
@@ -184,7 +184,7 @@ export const ExperimentHistoryPage: React.FC = () => {
             placeholder="Search experiments by name, ID or algo..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-1.5 text-xs text-fg placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="w-full bg-slate-900 border border-slate-700 rounded-lg pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500"
           />
         </div>
 
@@ -194,7 +194,7 @@ export const ExperimentHistoryPage: React.FC = () => {
           <select
             value={algoFilter}
             onChange={(e) => setAlgoFilter(e.target.value)}
-            className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-fg focus:outline-none focus:border-cyan-500 font-mono"
+            className="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500 font-mono"
           >
             <option value="ALL">All Algorithms</option>
             <option value="DNN">DNN</option>
@@ -236,7 +236,7 @@ export const ExperimentHistoryPage: React.FC = () => {
                     <td className="py-3 text-slate-400 text-[11px]">
                       {new Date(exp.created_at).toLocaleString()}
                     </td>
-                    <td className="py-3 font-sans font-medium text-fg max-w-[180px] truncate">
+                    <td className="py-3 font-sans font-medium text-white max-w-[180px] truncate">
                       {exp.name}
                     </td>
                     <td className="py-3">
@@ -287,7 +287,7 @@ export const ExperimentHistoryPage: React.FC = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-slate-900 border border-slate-800 font-mono text-xs">
               <div>
                 <span className="text-slate-500 text-[10px] block">Algorithm:</span>
-                <span className="text-fg font-bold">{selectedExp.algorithm}</span>
+                <span className="text-white font-bold">{selectedExp.algorithm}</span>
               </div>
               <div>
                 <span className="text-slate-500 text-[10px] block">SNR:</span>
@@ -327,19 +327,19 @@ export const ExperimentHistoryPage: React.FC = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs font-mono p-3 bg-slate-900/60 rounded-xl border border-slate-800">
                   <div>
                     <span className="text-slate-500 text-[10px] block">Bit Errors:</span>
-                    <span className="text-fg">
+                    <span className="text-white">
                       {selectedExp.results.bit_errors} / {selectedExp.results.total_bits}
                     </span>
                   </div>
                   <div>
                     <span className="text-slate-500 text-[10px] block">Symbol Errors:</span>
-                    <span className="text-fg">
+                    <span className="text-white">
                       {selectedExp.results.symbol_errors} / {selectedExp.results.total_symbols}
                     </span>
                   </div>
                   <div>
                     <span className="text-slate-500 text-[10px] block">Pipeline Latency:</span>
-                    <span className="text-fg">{selectedExp.execution_time_ms.toFixed(2)} ms</span>
+                    <span className="text-white">{selectedExp.execution_time_ms.toFixed(2)} ms</span>
                   </div>
                 </div>
               </div>

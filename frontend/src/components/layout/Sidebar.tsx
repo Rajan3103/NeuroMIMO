@@ -58,14 +58,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const sidebarContent = (
-    <div className="h-full flex flex-col justify-between p-4 bg-panel/70 border-r border-slate-800/80 w-64">
+    <div className="h-full flex flex-col justify-between p-4 bg-page/95 border-r border-slate-800/80 w-64">
       <div className="space-y-6">
         <div className="flex items-center justify-between md:hidden pb-2 border-b border-slate-800">
-          <span className="text-xs font-bold text-fg tracking-wider uppercase">Navigation</span>
+          <span className="text-xs font-bold text-white tracking-wider uppercase">Navigation</span>
           {onCloseMobile && (
             <button
               onClick={onCloseMobile}
-              className="p-1 rounded-lg text-slate-400 hover:text-fg"
+              className="p-1 rounded-lg text-slate-400 hover:text-white"
             >
               <X className="w-5 h-5" />
             </button>
@@ -121,7 +121,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <>
       {/* Desktop static sidebar */}
-      <aside className="hidden md:flex shrink-0 sticky top-16 self-start h-[calc(100vh-4rem)]">{sidebarContent}</aside>
+      <aside className="hidden md:flex shrink-0 h-full">{sidebarContent}</aside>
 
       {/* Mobile drawer with backdrop */}
       {isMobileOpen && (
