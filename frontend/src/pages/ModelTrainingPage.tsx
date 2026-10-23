@@ -186,7 +186,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
               {modelStatus?.trained ? 'Checkpoint Ready' : 'Untrained'}
             </Badge>
           </div>
-          <h2 className="text-xl font-bold text-white tracking-tight">PyTorch DNN Model Studio</h2>
+          <h2 className="text-xl font-bold text-fg tracking-tight">PyTorch DNN Model Studio</h2>
           <p className="text-xs text-slate-400">
             Supervised residual deep neural network training on synthetic MIMO-OFDM channel realizations.
           </p>
@@ -196,7 +196,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
           <button
             onClick={onRefreshStatus}
             title="Refresh status from backend"
-            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
+            className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-fg hover:border-slate-700 transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
           </button>
@@ -218,7 +218,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{error}</span>
           </div>
-          <button onClick={() => setError(null)} className="text-rose-300 hover:text-white underline text-[11px]">
+          <button onClick={() => setError(null)} className="text-rose-300 hover:text-fg underline text-[11px]">
             Dismiss
           </button>
         </div>
@@ -298,7 +298,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
           <div className="flex items-center gap-2">
             <Sliders className="w-4 h-4 text-purple-400" />
-            <h3 className="text-sm font-semibold text-white">Training Hyperparameters & Dataset Generation</h3>
+            <h3 className="text-sm font-semibold text-fg">Training Hyperparameters & Dataset Generation</h3>
           </div>
           <span className="text-[11px] text-slate-400">Adam Optimizer • MSE Criterion</span>
         </div>
@@ -315,7 +315,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
               value={epochs}
               disabled={isTrainingActive}
               onChange={(e) => setEpochs(Math.max(1, Math.min(100, Number(e.target.value))))}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
             />
             <span className="text-[10px] text-slate-400 mt-1 block">Number of complete dataset passes</span>
           </div>
@@ -328,7 +328,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
               value={batchSize}
               disabled={isTrainingActive}
               onChange={(e) => setBatchSize(Number(e.target.value))}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
             >
               <option value="16">16 realizations</option>
               <option value="32">32 realizations</option>
@@ -350,7 +350,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
               value={learningRate}
               disabled={isTrainingActive}
               onChange={(e) => setLearningRate(Number(e.target.value))}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
             />
             <span className="text-[10px] text-slate-400 mt-1 block">Step size for Adam optimizer</span>
           </div>
@@ -367,7 +367,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
               value={numSamples}
               disabled={isTrainingActive}
               onChange={(e) => setNumSamples(Math.max(100, Math.min(5000, Number(e.target.value))))}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-fg focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
             />
             <span className="text-[10px] text-slate-400 mt-1 block">80% Train / 20% Validation split</span>
           </div>
@@ -384,7 +384,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
                 value={minSnr}
                 disabled={isTrainingActive}
                 onChange={(e) => setMinSnr(Number(e.target.value))}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-2 text-xs text-fg focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
                 placeholder="Min SNR"
               />
               <input
@@ -394,7 +394,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
                 value={maxSnr}
                 disabled={isTrainingActive}
                 onChange={(e) => setMaxSnr(Number(e.target.value))}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
+                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-2 text-xs text-fg focus:outline-none focus:border-purple-500 font-mono disabled:opacity-50"
                 placeholder="Max SNR"
               />
             </div>
@@ -427,7 +427,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <TrendingDown className="w-4 h-4 text-purple-400" />
-            <h3 className="text-sm font-semibold text-white">Loss Convergence Curve</h3>
+            <h3 className="text-sm font-semibold text-fg">Loss Convergence Curve</h3>
           </div>
           <div className="flex items-center gap-4 text-xs font-mono">
             <div className="flex items-center gap-1.5">
@@ -451,23 +451,23 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={history} margin={{ top: 10, right: 30, left: 10, bottom: 10 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
                 <XAxis
                   dataKey="epoch"
-                  stroke="#64748b"
+                  stroke="var(--chart-axis)"
                   fontSize={11}
                   tickFormatter={(val) => `Ep ${val}`}
                 />
                 <YAxis
-                  stroke="#64748b"
+                  stroke="var(--chart-axis)"
                   fontSize={11}
                   domain={['auto', 'auto']}
                   tickFormatter={(val) => (typeof val === 'number' ? val.toExponential(2) : val)}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: '#0f172a',
-                    borderColor: '#334155',
+                    backgroundColor: 'var(--tooltip-bg)',
+                    borderColor: 'var(--tooltip-border)',
                     borderRadius: '8px',
                     fontSize: '11px',
                   }}
@@ -507,7 +507,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
         <div className="glass-panel p-6 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
             <div>
-              <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>Active Model Checkpoint Verification</span>
               </h3>
@@ -547,7 +547,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
               </div>
               <div>
                 <span className="text-slate-400 text-[10px] block">Tensor Dimensions:</span>
-                <span className="text-white font-bold text-sm">
+                <span className="text-fg font-bold text-sm">
                   {verifyResult.shape.join(' × ')}
                 </span>
               </div>

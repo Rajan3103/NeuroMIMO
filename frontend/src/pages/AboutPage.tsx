@@ -106,7 +106,7 @@ export const AboutPage: React.FC = () => {
           <Badge variant="cyan">ENGINEERING SPECIFICATION & METHODOLOGY</Badge>
           <span className="text-[10px] font-mono text-slate-400">IEEE 802.11ax / 3GPP 5G NR NR-MIMO</span>
         </div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">Project Methodology & Theory</h2>
+        <h2 className="text-2xl font-bold text-fg tracking-tight">Project Methodology & Theory</h2>
         <p className="text-sm text-slate-400 mt-1">
           Theoretical architecture, mathematical formulations, and empirical verification principles of NeuroMIMO.
         </p>
@@ -151,7 +151,7 @@ export const AboutPage: React.FC = () => {
       {/* Detailed Formulations Section */}
       <div className="glass-panel p-6 space-y-6">
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-cyan-400" />
             <span>Mathematical Formulations</span>
           </h3>
@@ -162,7 +162,7 @@ export const AboutPage: React.FC = () => {
           {/* 1. Baseband OFDM Model */}
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-white">1. MIMO-OFDM Baseband Input-Output Model</span>
+              <span className="font-semibold text-fg">1. MIMO-OFDM Baseband Input-Output Model</span>
               <span className="font-mono text-[11px] text-cyan-400">Per-Subcarrier Decomposition</span>
             </div>
             <p className="text-slate-400">
@@ -213,7 +213,7 @@ export const AboutPage: React.FC = () => {
           {/* 3. Spatial Equalization */}
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="font-semibold text-white">2. Spatial Multiplexing Equalization (MIMO Detection)</span>
+              <span className="font-semibold text-fg">2. Spatial Multiplexing Equalization (MIMO Detection)</span>
               <span className="font-mono text-[11px] text-purple-400">MMSE Equalizer</span>
             </div>
             <p className="text-slate-400">
@@ -229,7 +229,7 @@ export const AboutPage: React.FC = () => {
       {/* Experimental Methodology & Statistical Rigor */}
       <div className="glass-panel p-6 space-y-4">
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
             <span>Monte Carlo Statistical Rigor</span>
           </h3>
@@ -238,7 +238,7 @@ export const AboutPage: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs text-slate-300">
           <div className="space-y-2">
-            <h4 className="font-semibold text-white">Wilson Score Confidence Intervals</h4>
+            <h4 className="font-semibold text-fg">Wilson Score Confidence Intervals</h4>
             <p className="text-slate-400 leading-relaxed">
               To guarantee statistical credibility for low BER regimes (&lt; 10⁻³), 95% confidence intervals are computed using
               the Wilson score interval:
@@ -252,7 +252,7 @@ export const AboutPage: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            <h4 className="font-semibold text-white">Zero-Error Upper Bounds (Poisson Rule of Three)</h4>
+            <h4 className="font-semibold text-fg">Zero-Error Upper Bounds (Poisson Rule of Three)</h4>
             <p className="text-slate-400 leading-relaxed">
               When 0 bit errors are observed at high SNR (25 dB, 30 dB), standard standard-deviation formulas collapse
               to 0. NeuroMIMO applies the Poisson rule of three to report statistically honest bounds:
@@ -270,7 +270,7 @@ export const AboutPage: React.FC = () => {
       {/* Empirical Findings Summary Table */}
       <div className="glass-panel p-6 space-y-4">
         <div className="flex items-center justify-between border-b border-slate-800/80 pb-3">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
             <TrendingDown className="w-4 h-4 text-purple-400" />
             <span>Summary of Key Empirical Findings</span>
           </h3>
@@ -289,25 +289,25 @@ export const AboutPage: React.FC = () => {
             </thead>
             <tbody className="divide-y border-slate-800/60 font-mono text-[11px]">
               <tr className="text-slate-300">
-                <td className="py-2.5 font-sans font-semibold text-white">NMSE at 20 dB SNR</td>
+                <td className="py-2.5 font-sans font-semibold text-fg">NMSE at 20 dB SNR</td>
                 <td className="py-2.5 text-orange-400">-28.2 dB</td>
                 <td className="py-2.5 text-emerald-400">-40.8 dB</td>
                 <td className="py-2.5 text-purple-400 font-bold">-39.9 dB (+11.7 dB gain over LS)</td>
               </tr>
               <tr className="text-slate-300">
-                <td className="py-2.5 font-sans font-semibold text-white">Prior CSI Statistics Needed</td>
+                <td className="py-2.5 font-sans font-semibold text-fg">Prior CSI Statistics Needed</td>
                 <td className="py-2.5 text-slate-400">None</td>
                 <td className="py-2.5 text-rose-400">Requires True R_HH</td>
                 <td className="py-2.5 text-emerald-400">None (Learned implicitly)</td>
               </tr>
               <tr className="text-slate-300">
-                <td className="py-2.5 font-sans font-semibold text-white">BER at 25 dB SNR (QPSK)</td>
+                <td className="py-2.5 font-sans font-semibold text-fg">BER at 25 dB SNR (QPSK)</td>
                 <td className="py-2.5 text-orange-400">4.2 × 10⁻⁴</td>
                 <td className="py-2.5 text-emerald-400">&lt; 6.4 × 10⁻⁵</td>
                 <td className="py-2.5 text-purple-400 font-bold">&lt; 6.4 × 10⁻⁵ (0 errors observed)</td>
               </tr>
               <tr className="text-slate-300">
-                <td className="py-2.5 font-sans font-semibold text-white">Inference Latency</td>
+                <td className="py-2.5 font-sans font-semibold text-fg">Inference Latency</td>
                 <td className="py-2.5 text-slate-400">0.15 ms</td>
                 <td className="py-2.5 text-slate-400">0.42 ms</td>
                 <td className="py-2.5 text-slate-400">0.38 ms</td>
@@ -323,7 +323,7 @@ export const AboutPage: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <ImageIcon className="w-4 h-4 text-cyan-400" />
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-sm font-semibold text-fg">
                 Empirical Research Result Figures & Screenshots
               </h3>
             </div>
@@ -338,7 +338,7 @@ export const AboutPage: React.FC = () => {
               className={`px-2.5 py-1 rounded text-xs font-semibold transition-all ${
                 filterCategory === 'ALL'
                   ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-fg'
               }`}
             >
               All (6)
@@ -348,7 +348,7 @@ export const AboutPage: React.FC = () => {
               className={`px-2.5 py-1 rounded text-xs font-semibold transition-all ${
                 filterCategory === 'Accuracy'
                   ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-fg'
               }`}
             >
               Accuracy
@@ -358,7 +358,7 @@ export const AboutPage: React.FC = () => {
               className={`px-2.5 py-1 rounded text-xs font-semibold transition-all ${
                 filterCategory === 'Recovery'
                   ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-fg'
               }`}
             >
               Recovery
@@ -368,7 +368,7 @@ export const AboutPage: React.FC = () => {
               className={`px-2.5 py-1 rounded text-xs font-semibold transition-all ${
                 filterCategory === 'Complexity'
                   ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                  : 'text-slate-400 hover:text-white'
+                  : 'text-slate-400 hover:text-fg'
               }`}
             >
               Complexity
@@ -391,7 +391,7 @@ export const AboutPage: React.FC = () => {
                   className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-slate-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white text-xs font-semibold">
+                <div className="absolute inset-0 bg-slate-950/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-fg text-xs font-semibold">
                   <Maximize2 className="w-4 h-4 text-cyan-400" />
                   <span>Expand High-Res (300 DPI)</span>
                 </div>
@@ -406,7 +406,7 @@ export const AboutPage: React.FC = () => {
                     </span>
                     <span className="text-[10px] font-mono text-slate-500">{fig.filename}</span>
                   </div>
-                  <h4 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors pt-0.5">
+                  <h4 className="text-xs font-bold text-fg group-hover:text-cyan-400 transition-colors pt-0.5">
                     {fig.title}
                   </h4>
                   <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
@@ -443,7 +443,7 @@ export const AboutPage: React.FC = () => {
             </div>
             <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 space-y-2 text-xs">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-white">{selectedFigure.title}</span>
+                <span className="font-semibold text-fg">{selectedFigure.title}</span>
                 <span className="text-[11px] font-mono text-cyan-400">{selectedFigure.badge}</span>
               </div>
               <p className="text-slate-400 leading-relaxed text-[11px]">
@@ -472,7 +472,7 @@ export const AboutPage: React.FC = () => {
 
       {/* Reproducibility CLI commands */}
       <div className="glass-panel p-6 space-y-3">
-        <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+        <h3 className="text-sm font-semibold text-fg flex items-center gap-2">
           <Terminal className="w-4 h-4 text-cyan-400" />
           <span>CLI Reproduction Commands</span>
         </h3>

@@ -13,12 +13,34 @@ import { AboutPage } from './pages/AboutPage';
 import { api } from './api/client';
 import type { HealthResponse, ModelStatus } from './types';
 
+export type Theme = 'light' | 'dark';
+const THEME_STORAGE_KEY = 'neuromimo-theme';
+
+function loadSavedTheme(): Theme {
+  try {
+    return localStorage.getItem(THEME_STORAGE_KEY) === 'dark' ? 'dark' : 'light';
+  } catch {
+    return 'light';
+  }
+}
+
 export function App() {
   const [currentTab, setCurrentTab] = useState<NavTab>('overview');
   const [health, setHealth] = useState<HealthResponse | null>(null);
   const [modelStatus, setModelStatus] = useState<ModelStatus | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState<boolean>(false);
+  const [theme, setTheme] = useState<Theme>(loadSavedTheme);
+
+  // Apply the theme class to <html> so the CSS colour variables switch everywhere
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch {
+      // Storage can be unavailable (private mode); the theme still applies for this visit
+    }
+  }, [theme]);
 
   const fetchStatus = async () => {
     setLoading(true);
@@ -42,12 +64,14 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
+    <div className="min-h-screen bg-page text-slate-100 flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
       <Navbar
         health={health}
         loading={loading}
         onRefresh={fetchStatus}
         onToggleSidebar={() => setMobileSidebarOpen((prev) => !prev)}
+        theme={theme}
+        onToggleTheme={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
       />
 
       <div className="flex flex-1 overflow-hidden relative">

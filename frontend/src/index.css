@@ -2,17 +2,177 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Theme colours. Tailwind's slate and accent palettes (see tailwind.config.js) read
+ * these variables, so the same class names render the light theme by default and the
+ * original dark theme when <html> has the "dark" class.
+ */
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
+    --slate-50: 2 6 23;
+    --slate-100: 15 23 42;
+    --slate-200: 30 41 59;
+    --slate-300: 51 65 85;
+    --slate-400: 71 85 105;
+    --slate-500: 100 116 139;
+    --slate-600: 148 163 184;
+    --slate-700: 203 213 225;
+    --slate-800: 226 232 240;
+    --slate-900: 241 245 249;
+    --slate-950: 248 250 252;
+    --cyan-50: 236 254 255;
+    --cyan-100: 207 250 254;
+    --cyan-200: 21 94 117;
+    --cyan-300: 21 94 117;
+    --cyan-400: 14 116 144;
+    --cyan-500: 8 145 178;
+    --cyan-600: 14 116 144;
+    --cyan-700: 21 94 117;
+    --cyan-800: 165 243 252;
+    --cyan-900: 207 250 254;
+    --cyan-950: 236 254 255;
+    --purple-50: 250 245 255;
+    --purple-100: 243 232 255;
+    --purple-200: 107 33 168;
+    --purple-300: 107 33 168;
+    --purple-400: 126 34 206;
+    --purple-500: 147 51 234;
+    --purple-600: 126 34 206;
+    --purple-700: 107 33 168;
+    --purple-800: 233 213 255;
+    --purple-900: 243 232 255;
+    --purple-950: 250 245 255;
+    --emerald-50: 236 253 245;
+    --emerald-100: 209 250 229;
+    --emerald-200: 6 95 70;
+    --emerald-300: 6 95 70;
+    --emerald-400: 4 120 87;
+    --emerald-500: 5 150 105;
+    --emerald-600: 4 120 87;
+    --emerald-700: 6 95 70;
+    --emerald-800: 167 243 208;
+    --emerald-900: 209 250 229;
+    --emerald-950: 236 253 245;
+    --rose-50: 255 241 242;
+    --rose-100: 255 228 230;
+    --rose-200: 159 18 57;
+    --rose-300: 159 18 57;
+    --rose-400: 190 18 60;
+    --rose-500: 225 29 72;
+    --rose-600: 190 18 60;
+    --rose-700: 159 18 57;
+    --rose-800: 254 205 211;
+    --rose-900: 255 228 230;
+    --rose-950: 255 241 242;
+    --amber-50: 255 251 235;
+    --amber-100: 254 243 199;
+    --amber-200: 146 64 14;
+    --amber-300: 146 64 14;
+    --amber-400: 180 83 9;
+    --amber-500: 217 119 6;
+    --amber-600: 180 83 9;
+    --amber-700: 146 64 14;
+    --amber-800: 253 230 138;
+    --amber-900: 254 243 199;
+    --amber-950: 255 251 235;
+    --page: 244 246 250;
+    --panel: 255 255 255;
+    --fg: 15 23 42;
+    --chart-grid: #e2e8f0;
+    --chart-axis: #64748b;
+    --chart-tick: #334155;
+    --tooltip-bg: #ffffff;
+    --tooltip-border: #cbd5e1;
+    --glow-a: rgba(8, 145, 178, 0.07);
+    --glow-b: rgba(126, 34, 206, 0.05);
   }
-  
+
+  .dark {
+    color-scheme: dark;
+    --slate-50: 248 250 252;
+    --slate-100: 241 245 249;
+    --slate-200: 226 232 240;
+    --slate-300: 203 213 225;
+    --slate-400: 148 163 184;
+    --slate-500: 100 116 139;
+    --slate-600: 71 85 105;
+    --slate-700: 51 65 85;
+    --slate-800: 30 41 59;
+    --slate-900: 15 23 42;
+    --slate-950: 2 6 23;
+    --cyan-50: 236 254 255;
+    --cyan-100: 207 250 254;
+    --cyan-200: 165 243 252;
+    --cyan-300: 103 232 249;
+    --cyan-400: 34 211 238;
+    --cyan-500: 6 182 212;
+    --cyan-600: 8 145 178;
+    --cyan-700: 14 116 144;
+    --cyan-800: 21 94 117;
+    --cyan-900: 22 78 99;
+    --cyan-950: 8 51 68;
+    --purple-50: 250 245 255;
+    --purple-100: 243 232 255;
+    --purple-200: 233 213 255;
+    --purple-300: 216 180 254;
+    --purple-400: 192 132 252;
+    --purple-500: 168 85 247;
+    --purple-600: 147 51 234;
+    --purple-700: 126 34 206;
+    --purple-800: 107 33 168;
+    --purple-900: 88 28 135;
+    --purple-950: 59 7 100;
+    --emerald-50: 236 253 245;
+    --emerald-100: 209 250 229;
+    --emerald-200: 167 243 208;
+    --emerald-300: 110 231 183;
+    --emerald-400: 52 211 153;
+    --emerald-500: 16 185 129;
+    --emerald-600: 5 150 105;
+    --emerald-700: 4 120 87;
+    --emerald-800: 6 95 70;
+    --emerald-900: 6 78 59;
+    --emerald-950: 2 44 34;
+    --rose-50: 255 241 242;
+    --rose-100: 255 228 230;
+    --rose-200: 254 205 211;
+    --rose-300: 253 164 175;
+    --rose-400: 251 113 133;
+    --rose-500: 244 63 94;
+    --rose-600: 225 29 72;
+    --rose-700: 190 18 60;
+    --rose-800: 159 18 57;
+    --rose-900: 136 19 55;
+    --rose-950: 76 5 25;
+    --amber-50: 255 251 235;
+    --amber-100: 254 243 199;
+    --amber-200: 253 230 138;
+    --amber-300: 252 211 77;
+    --amber-400: 251 191 36;
+    --amber-500: 245 158 11;
+    --amber-600: 217 119 6;
+    --amber-700: 180 83 9;
+    --amber-800: 146 64 14;
+    --amber-900: 120 53 15;
+    --amber-950: 69 26 3;
+    --page: 11 15 25;
+    --panel: 17 24 39;
+    --fg: 255 255 255;
+    --chart-grid: #1e293b;
+    --chart-axis: #64748b;
+    --chart-tick: #cbd5e1;
+    --tooltip-bg: #0f172a;
+    --tooltip-border: #334155;
+    --glow-a: rgba(6, 182, 212, 0.08);
+    --glow-b: rgba(139, 92, 246, 0.08);
+  }
+
   body {
-    @apply bg-[#0B0F19] text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500 selection:text-black;
-    background-image: 
-      radial-gradient(at 0% 0%, rgba(6, 182, 212, 0.08) 0px, transparent 50%),
-      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
-      radial-gradient(at 50% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+    @apply bg-page text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500 selection:text-black;
+    background-image:
+      radial-gradient(at 0% 0%, var(--glow-a) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, var(--glow-b) 0px, transparent 50%);
     background-attachment: fixed;
   }
 }
@@ -23,29 +183,29 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: rgb(var(--page));
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: rgb(var(--slate-800));
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: rgb(var(--slate-700));
 }
 
-/* Glassmorphic card styling */
+/* Card styling */
 .glass-panel {
-  @apply bg-[#111827]/80 backdrop-blur-md border border-slate-800/80 rounded-xl shadow-xl;
+  @apply bg-panel/90 backdrop-blur-md border border-slate-800/80 rounded-2xl shadow-sm;
 }
 
 .glass-panel-interactive {
-  @apply bg-[#111827]/80 backdrop-blur-md border border-slate-800/80 rounded-xl shadow-xl transition-all duration-200 hover:border-slate-700 hover:shadow-cyan-950/20;
+  @apply bg-panel/90 backdrop-blur-md border border-slate-800/80 rounded-2xl shadow-sm transition-all duration-200 hover:border-slate-700 hover:shadow-md;
 }
 
 .glow-cyan {
-  box-shadow: 0 0 20px -5px rgba(6, 182, 212, 0.3);
+  box-shadow: 0 0 20px -5px rgb(var(--cyan-500) / 0.3);
 }
 
 .glow-purple {
-  box-shadow: 0 0 20px -5px rgba(139, 92, 246, 0.3);
+  box-shadow: 0 0 20px -5px rgb(var(--purple-500) / 0.3);
 }

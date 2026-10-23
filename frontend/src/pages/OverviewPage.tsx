@@ -59,12 +59,12 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Banner */}
-      <div className="glass-panel p-6 sm:p-8 border-cyan-900/30 bg-gradient-to-r from-slate-900/90 via-[#111827]/90 to-slate-900/90 relative overflow-hidden">
+      <div className="glass-panel p-6 sm:p-8 border-cyan-900/30 bg-gradient-to-r from-slate-900/90 via-panel/90 to-slate-900/90 relative overflow-hidden">
         <div className="relative z-10 max-w-3xl">
           <Badge variant="cyan" className="mb-3" dot>
             FINAL-YEAR ENGINEERING CAPSTONE
           </Badge>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-fg tracking-tight mb-2">
             AI-Enhanced MIMO-OFDM Channel Estimation & Signal Recovery
           </h2>
           <p className="text-sm text-slate-300 leading-relaxed mb-5">
@@ -146,7 +146,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-cyan-400" />
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-fg uppercase tracking-wider">
                 Live Simulation Output @ {demoResult.snr_db} dB SNR ({demoResult.algorithm})
               </h3>
             </div>
@@ -166,7 +166,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             </div>
             <div className="p-3 bg-slate-950/60 rounded-lg border border-slate-800">
               <span className="text-slate-400 block mb-1">Bit Errors / Total:</span>
-              <span className="text-white text-base font-bold">{demoResult.bit_errors} / {demoResult.total_bits}</span>
+              <span className="text-fg text-base font-bold">{demoResult.bit_errors} / {demoResult.total_bits}</span>
             </div>
             <div className="p-3 bg-slate-950/60 rounded-lg border border-slate-800">
               <span className="text-slate-400 block mb-1">Symbol Errors / Total:</span>
@@ -182,9 +182,9 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             <div className="h-44 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
               <ResponsiveContainer width="100%" height="100%">
                 <ScatterChart margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                  <XAxis type="number" dataKey="i" domain={[-2, 2]} stroke="#64748b" tick={{ fontSize: 9 }} />
-                  <YAxis type="number" dataKey="q" domain={[-2, 2]} stroke="#64748b" tick={{ fontSize: 9 }} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                  <XAxis type="number" dataKey="i" domain={[-2, 2]} stroke="var(--chart-axis)" tick={{ fontSize: 9 }} />
+                  <YAxis type="number" dataKey="q" domain={[-2, 2]} stroke="var(--chart-axis)" tick={{ fontSize: 9 }} />
                   <Tooltip
                     cursor={{ strokeDasharray: '3 3' }}
                     content={({ payload }) => {
@@ -213,7 +213,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
       <div className="glass-panel p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-semibold text-white">End-to-End Transceiver Pipeline</h3>
+            <h3 className="text-base font-semibold text-fg">End-to-End Transceiver Pipeline</h3>
             <p className="text-xs text-slate-400">Signal processing flow from bit generator to recovered data bits</p>
           </div>
           <Badge variant="cyan">Deterministic Ground Truth</Badge>
@@ -230,7 +230,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           ].map((stage) => (
             <div key={stage.step} className="p-3 rounded-lg bg-slate-900/60 border border-slate-800/80">
               <span className={`text-[10px] font-mono font-bold ${stage.color}`}>{stage.step}</span>
-              <h4 className="text-xs font-semibold text-white mt-1">{stage.title}</h4>
+              <h4 className="text-xs font-semibold text-fg mt-1">{stage.title}</h4>
               <p className="text-[11px] text-slate-400 mt-1 leading-snug">{stage.desc}</p>
             </div>
           ))}
@@ -243,7 +243,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           <div>
             <div className="flex items-center gap-2">
               <BarChart2 className="w-4 h-4 text-cyan-400" />
-              <h3 className="text-base font-semibold text-white">Empirical Research Results & Publication Curves</h3>
+              <h3 className="text-base font-semibold text-fg">Empirical Research Results & Publication Curves</h3>
             </div>
             <p className="text-xs text-slate-400 mt-0.5">
               Comparative Monte Carlo evaluation across 105 channel realizations from 0 to 30 dB SNR.
@@ -269,14 +269,14 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
                 alt="NMSE vs SNR Waterfall"
                 className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white text-xs font-semibold">
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-fg text-xs font-semibold">
                 <Maximize2 className="w-3.5 h-3.5 text-cyan-400" />
                 <span>Open in Comparison Suite</span>
               </div>
             </div>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
+                <h4 className="text-xs font-bold text-fg group-hover:text-cyan-400 transition-colors">
                   Channel Estimation NMSE vs SNR
                 </h4>
                 <Badge variant="purple">+11.7 dB Gain</Badge>
@@ -298,14 +298,14 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
                 alt="BER vs SNR Waterfall"
                 className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-white text-xs font-semibold">
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1.5 text-fg text-xs font-semibold">
                 <Maximize2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Open in Comparison Suite</span>
               </div>
             </div>
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
-                <h4 className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">
+                <h4 className="text-xs font-bold text-fg group-hover:text-emerald-400 transition-colors">
                   Bit Error Rate (BER) vs SNR
                 </h4>
                 <Badge variant="green">Zero Errors at 25 dB</Badge>
@@ -325,7 +325,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           className="glass-panel p-5 cursor-pointer hover:border-cyan-500/40 hover:bg-slate-900/80 transition-all group"
         >
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-sm font-semibold text-white group-hover:text-cyan-400 transition-colors">
+            <h4 className="text-sm font-semibold text-fg group-hover:text-cyan-400 transition-colors">
               Physical Layer Simulator
             </h4>
             <Zap className="w-4 h-4 text-cyan-400" />
@@ -343,7 +343,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           className="glass-panel p-5 cursor-pointer hover:border-purple-500/40 hover:bg-slate-900/80 transition-all group"
         >
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-sm font-semibold text-white group-hover:text-purple-400 transition-colors">
+            <h4 className="text-sm font-semibold text-fg group-hover:text-purple-400 transition-colors">
               ML Model Studio
             </h4>
             <Cpu className="w-4 h-4 text-purple-400" />
@@ -361,7 +361,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
           className="glass-panel p-5 cursor-pointer hover:border-emerald-500/40 hover:bg-slate-900/80 transition-all group"
         >
           <div className="flex items-center justify-between mb-2">
-            <h4 className="text-sm font-semibold text-white group-hover:text-emerald-400 transition-colors">
+            <h4 className="text-sm font-semibold text-fg group-hover:text-emerald-400 transition-colors">
               Performance Comparison
             </h4>
             <BarChart2 className="w-4 h-4 text-emerald-400" />

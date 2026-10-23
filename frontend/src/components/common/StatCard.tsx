@@ -31,7 +31,7 @@ export const StatCard: React.FC<StatCardProps> = ({
         <div>
           <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">{title}</p>
           <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold font-mono tracking-tight text-white">{value}</span>
+            <span className="text-2xl font-bold font-mono tracking-tight text-fg">{value}</span>
             {badgeText && (
               <span className="text-xs px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">
                 {badgeText}

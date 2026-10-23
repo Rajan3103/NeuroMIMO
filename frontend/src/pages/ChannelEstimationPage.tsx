@@ -91,7 +91,7 @@ export const ChannelEstimationPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight">Channel Estimation Lab</h2>
+          <h2 className="text-xl font-bold text-fg tracking-tight">Channel Estimation Lab</h2>
           <p className="text-xs text-slate-400">
             Compare conventional Least Squares (LS), Linear MMSE, and Deep Neural Network estimators.
           </p>
@@ -141,7 +141,7 @@ export const ChannelEstimationPage: React.FC = () => {
         <div className="flex items-start gap-3 text-xs text-slate-300">
           <Info className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
           <p className="leading-relaxed">
-            The same channel realization <strong className="text-white">H</strong> and identical noisy pilot observations
+            The same channel realization <strong className="text-fg">H</strong> and identical noisy pilot observations
             are evaluated by all algorithms simultaneously. This guarantees zero realization bias across comparisons.
           </p>
         </div>
@@ -177,7 +177,7 @@ export const ChannelEstimationPage: React.FC = () => {
         ].map((algo) => (
           <div key={algo.name} className="glass-panel p-5 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white">{algo.name}</h3>
+              <h3 className="text-sm font-bold text-fg">{algo.name}</h3>
               <Badge variant={algo.color as any}>{algo.tag}</Badge>
             </div>
             <div className="p-2.5 rounded bg-slate-900 border border-slate-800 font-mono text-[11px] text-cyan-300 text-center overflow-x-auto">
@@ -209,7 +209,7 @@ export const ChannelEstimationPage: React.FC = () => {
         <div className="space-y-6">
           <div className="glass-panel p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+              <h3 className="text-sm font-bold text-fg uppercase tracking-wider flex items-center gap-2">
                 <BarChart3 className="w-4 h-4 text-cyan-400" />
                 <span>Head-to-Head Comparative Benchmark @ {snr} dB SNR</span>
               </h3>
@@ -231,7 +231,7 @@ export const ChannelEstimationPage: React.FC = () => {
                 <tbody className="divide-y divide-slate-800/60 font-mono">
                   {results.map((r) => (
                     <tr key={r.algorithm} className="text-slate-200 hover:bg-slate-800/30">
-                      <td className="py-3 font-sans font-semibold text-white">{r.algorithm}</td>
+                      <td className="py-3 font-sans font-semibold text-fg">{r.algorithm}</td>
                       <td className="py-3 text-cyan-400 font-bold">{r.nmse_db.toFixed(2)} dB</td>
                       <td className="py-3 text-slate-300">{r.nmse.toExponential(3)}</td>
                       <td className="py-3 text-emerald-400">{r.ber.toExponential(3)}</td>
@@ -253,9 +253,9 @@ export const ChannelEstimationPage: React.FC = () => {
                 <div className="h-60 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={results} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="algorithm" stroke="#64748b" tick={{ fontSize: 11, fill: '#cbd5e1' }} />
-                      <YAxis stroke="#64748b" tick={{ fontSize: 10 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                      <XAxis dataKey="algorithm" stroke="var(--chart-axis)" tick={{ fontSize: 11, fill: 'var(--chart-tick)' }} />
+                      <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 10 }} />
                       <Tooltip
                         content={({ payload }) => {
                           if (!payload || !payload.length) return null;
@@ -281,9 +281,9 @@ export const ChannelEstimationPage: React.FC = () => {
                 <div className="h-60 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={results} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-                      <XAxis dataKey="algorithm" stroke="#64748b" tick={{ fontSize: 11, fill: '#cbd5e1' }} />
-                      <YAxis stroke="#64748b" tick={{ fontSize: 10 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
+                      <XAxis dataKey="algorithm" stroke="var(--chart-axis)" tick={{ fontSize: 11, fill: 'var(--chart-tick)' }} />
+                      <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 10 }} />
                       <Tooltip
                         content={({ payload }) => {
                           if (!payload || !payload.length) return null;
@@ -309,7 +309,7 @@ export const ChannelEstimationPage: React.FC = () => {
       <div className="glass-panel p-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <h3 className="text-sm font-bold text-fg uppercase tracking-wider flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-purple-400" />
               <span>Real-Time Channel Frequency Response Inspection</span>
             </h3>
@@ -351,15 +351,15 @@ export const ChannelEstimationPage: React.FC = () => {
             <div className="h-64 w-full bg-slate-950 rounded-lg border border-slate-800 p-2">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={subcarrierComparisonData} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid)" />
                   <XAxis
                     dataKey="subcarrier"
-                    stroke="#64748b"
+                    stroke="var(--chart-axis)"
                     tick={{ fontSize: 10 }}
                     label={{ value: 'Subcarrier Index k', position: 'insideBottom', offset: -5, fill: '#64748b', fontSize: 10 }}
                   />
                   <YAxis
-                    stroke="#64748b"
+                    stroke="var(--chart-axis)"
                     tick={{ fontSize: 10 }}
                     label={{ value: '|H[k]| Magnitude', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }}
                   />

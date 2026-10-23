@@ -1,13 +1,16 @@
 import React from 'react';
-import { Radio, Cpu, RefreshCw, CheckCircle2, AlertCircle, Menu } from 'lucide-react';
+import { Radio, Cpu, RefreshCw, CheckCircle2, AlertCircle, Menu, Sun, Moon } from 'lucide-react';
 import { Badge } from '../common/Badge';
 import type { HealthResponse } from '../../types';
+import type { Theme } from '../../App';
 
 interface NavbarProps {
   health: HealthResponse | null;
   loading: boolean;
   onRefresh: () => void;
   onToggleSidebar?: () => void;
+  theme: Theme;
+  onToggleTheme: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -15,9 +18,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   loading,
   onRefresh,
   onToggleSidebar,
+  theme,
+  onToggleTheme,
 }) => {
   return (
-    <header className="h-16 border-b border-slate-800/80 bg-[#0B0F19]/90 backdrop-blur-md px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
+    <header className="h-16 border-b border-slate-800/80 bg-panel/80 backdrop-blur-md shadow-sm px-4 sm:px-6 flex items-center justify-between sticky top-0 z-40">
       <div className="flex items-center gap-3">
         {onToggleSidebar && (
           <button
@@ -33,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-base sm:text-lg font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            <h1 className="text-base sm:text-lg font-bold tracking-tight bg-gradient-to-r from-cyan-500 to-purple-500 bg-clip-text text-transparent">
               NeuroMIMO
             </h1>
             <Badge variant="cyan" className="font-mono text-[10px]">
@@ -68,9 +73,17 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
 
         <button
+          onClick={onToggleTheme}
+          className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-fg transition-colors"
+          title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+        >
+          {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
+
+        <button
           onClick={onRefresh}
           disabled={loading}
-          className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white transition-colors"
+          className="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-fg transition-colors"
           title="Refresh backend status"
         >
           <RefreshCw
