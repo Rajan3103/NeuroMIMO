@@ -532,9 +532,9 @@ def results(story, W):
     story.append(Spacer(1, 6))
     story.append(figure("nmse_vs_snr.png", "Figure 6: Channel estimation error versus SNR.", W * 0.7))
     story += bullets([
-        f"<b>Noisy conditions (0–10 dB):</b> the DNN is as good as LS and clearly better than LMMSE at "
-        f"0 dB ({fmt_nmse(rec['DNN'][0.0])} vs {fmt_nmse(rec['MMSE'][0.0])}), without needing channel "
-        "statistics.",
+        f"<b>Noisy conditions (0–10 dB):</b> LMMSE is best, as theory predicts ({fmt_nmse(rec['MMSE'][0.0])} "
+        f"at 0 dB). The DNN ({fmt_nmse(rec['DNN'][0.0])}) is slightly better than LS "
+        f"({fmt_nmse(rec['LS'][0.0])}) and close to LMMSE, without needing channel statistics.",
         f"<b>Clean conditions (20–30 dB):</b> the DNN levels off near {fmt_nmse(rec['DNN'][30.0])} while "
         f"LS keeps improving to {fmt_nmse(rec['LS'][30.0])}. One small network trained on the whole 0–30 "
         "dB range cannot match LS when the noise is tiny.",

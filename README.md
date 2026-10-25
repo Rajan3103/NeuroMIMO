@@ -161,7 +161,7 @@ $ .venv\Scripts\Activate.ps1
 # Install physical layer & ML dependencies
 $ pip install -r requirements.txt
 
-# Run full test suite (80 unit and API tests)
+# Run full test suite (83 unit and API tests)
 $ pytest backend/tests/ -v
 
 # Launch FastAPI core engine
@@ -203,18 +203,18 @@ All evaluations were executed over $15$ independent Monte Carlo channels per SNR
 
 | Metric / Scenario | Least Squares (LS) | Linear MMSE | PyTorch Residual DNN | Genie (Perfect CSI) |
 | :--- | :--- | :--- | :--- | :--- |
-| **NMSE @ 0 dB SNR** | $-8.38\text{ dB}$ | $-4.01\text{ dB}$ | **$-8.36\text{ dB}$** | $-\infty$ |
-| **NMSE @ 15 dB SNR** | $-23.09\text{ dB}$ | $-20.50\text{ dB}$ | **$-20.88\text{ dB}$** | $-\infty$ |
-| **NMSE @ 30 dB SNR** | $-38.64\text{ dB}$ | $-38.41\text{ dB}$ | **$-24.76\text{ dB}$** (Floor) | $-\infty$ |
-| **BER @ 0 dB SNR** | $0.2310$ (10,866 errs) | $0.2459$ (11,567 errs) | **$0.2318$** (10,904 errs) | $0.2064$ (9,710 errs) |
-| **BER @ 15 dB SNR** | $0.0307$ (1,443 errs) | $0.0328$ (1,541 errs) | **$0.0333$** (1,567 errs) | $0.0259$ (1,219 errs) |
-| **BER @ 25 dB SNR** | $0.0067$ (314 errs) | $0.0069$ (325 errs) | **$0.0115$** (540 errs) | $0.0054$ (252 errs) |
-| **BER @ 30 dB SNR** | $0.0018$ (85 errs) | $0.0018$ (86 errs) | **$0.0066$** (311 errs) | $0.0017$ (82 errs) |
-| **Inference Latency** | **$0.12\text{ ms}$** | **$0.35\text{ ms}$** | **$0.49\text{ ms}$** | N/A |
+| **NMSE @ 0 dB SNR** | $-8.38\text{ dB}$ | $-9.05\text{ dB}$ | **$-8.67\text{ dB}$** | $-\infty$ |
+| **NMSE @ 15 dB SNR** | $-23.09\text{ dB}$ | $-23.19\text{ dB}$ | **$-19.56\text{ dB}$** | $-\infty$ |
+| **NMSE @ 30 dB SNR** | $-38.64\text{ dB}$ | $-38.64\text{ dB}$ | **$-25.96\text{ dB}$** (Floor) | $-\infty$ |
+| **BER @ 0 dB SNR** | $0.2310$ (10,866 errs) | $0.2309$ (10,860 errs) | **$0.2316$ (10,893 errs)** | $0.2064$ (9,710 errs) |
+| **BER @ 15 dB SNR** | $0.0307$ (1,443 errs) | $0.0306$ (1,438 errs) | **$0.0334$ (1,570 errs)** | $0.0259$ (1,219 errs) |
+| **BER @ 25 dB SNR** | $0.0067$ (314 errs) | $0.0067$ (317 errs) | **$0.0108$ (506 errs)** | $0.0054$ (252 errs) |
+| **BER @ 30 dB SNR** | $0.0018$ (85 errs) | $0.0018$ (85 errs) | **$0.0043$ (201 errs)** | $0.0017$ (82 errs) |
+| **Inference Latency** | **$0.12\text{ ms}$** | **$0.40\text{ ms}$** | **$0.65\text{ ms}$** | N/A |
 
 #### Key Scientific Takeaways:
-1. **Low-to-Mid SNR Parity**: PyTorch Residual DNN tracks theoretical MMSE estimation without requiring known channel covariance matrix $\mathbf{R}_{HH}$ or noise variance $\sigma_n^2$.
-2. **Residual Regression Floor**: Because the DNN is trained across a wide dynamic range $[0, 30]\text{ dB}$ with a lightweight MLP ($330\text{k}$ parameters), it exhibits a regression floor around $-24.8\text{ dB}$ at $30\text{ dB}$ SNR, while classical DFT sinc interpolation reaches $-38.6\text{ dB}$.
+1. **Low-SNR Behaviour**: LMMSE is best at 0 dB ($-9.05\text{ dB}$), as theory predicts. The PyTorch Residual DNN ($-8.67\text{ dB}$) is slightly better than LS ($-8.38\text{ dB}$) without requiring the channel covariance matrix $\mathbf{R}_{HH}$ or noise variance $\sigma_n^2$.
+2. **Residual Regression Floor**: Because the DNN is trained across a wide dynamic range $[0, 30]\text{ dB}$ with a lightweight MLP ($330\text{k}$ parameters), it levels off around $-26.0\text{ dB}$ at $30\text{ dB}$ SNR, while classical DFT sinc interpolation reaches $-38.6\text{ dB}$.
 3. **Statistical Confidence**: All zero-error regimes report 95% Wilson score confidence intervals and Poisson rule-of-three upper bounds ($3/N_{bits}$).
 
 ---

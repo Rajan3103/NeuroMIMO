@@ -106,7 +106,7 @@ def how_to_use(story, W):
     story.append(Spacer(1, 6))
     story.append(callout(
         "<b>Golden rules for the review.</b> (1) Answer the question asked, then stop. (2) Use your own "
-        "numbers: “at 0 dB the DNN gives −8.4 dB NMSE” sounds far stronger than "
+        "numbers: “at 0 dB the DNN gives −8.7 dB NMSE” sounds far stronger than "
         "“it works well”. (3) If you do not know, say so and say how you would find out; never "
         "invent. (4) Admit weaknesses before the professor finds them; it shows you understand your work.",
         W))
@@ -122,8 +122,8 @@ def pitch(story, W):
         "I compare three estimators on identical channels: <b>Least Squares</b>, <b>Linear MMSE</b>, and "
         "a <b>residual deep neural network</b> in PyTorch that refines the LS estimate. I simulate "
         "Rayleigh multipath fading over 0 to 30 dB SNR and measure NMSE, bit error rate with confidence "
-        "intervals, and speed. The DNN matches LS at low SNR without needing channel statistics, but it "
-        "hits an error floor around −25 dB at high SNR, which I analyse. Everything runs through a "
+        "intervals, and speed. The DNN slightly beats LS at low SNR and comes close to LMMSE without "
+        "needing channel statistics, but it hits an error floor around −25 dB at high SNR, which I analyse. Everything runs through a "
         "FastAPI backend and a React dashboard, so results are reproducible and interactive.”",
         W, fill="#F2F8EF", edge="#2E7D32"))
 
@@ -147,13 +147,13 @@ def talk(story, W):
          "→256→512, 330,112 parameters: it takes the LS estimate and learns only the correction. "
          "Training data are split by channel so the test channels are never seen."),
         ("Minute 4 — Results",
-         "Show the NMSE-vs-SNR figure. At 0 dB the DNN gives −8.4 dB, equal to LS. Above about 15 dB it "
+         "Show the NMSE-vs-SNR figure. At 0 dB LMMSE is best (−9.1 dB), then the DNN (−8.7 dB) and LS (−8.4 dB). Above about 15 dB the DNN "
          "levels off near −25 dB while LS reaches −38.6 dB at 30 dB. All estimators run in under "
          "1 ms per frame. BER points carry 95% Wilson confidence intervals."),
         ("Minute 5 — Insight and future work",
          "The floor comes from training one small network over the whole SNR range. Fixes: give the SNR to the "
          "network as an input, use a CNN over time and frequency, and test realistic ray-traced channels, "
-         "which I have started with a DeepMIMO loader. The software is tested with 80 automated tests."),
+         "which I have started with a DeepMIMO loader. The software is tested with 83 automated tests."),
     ]
     for title, text in parts:
         story.append(KeepTogether([P(title, "h2"), Paragraph(text, S["say"])]))
@@ -181,13 +181,13 @@ def numbers_card(story, W):
                                              f"{bits:,} bits per point"],
         ["DNN", "512→256→128→256→512", "Residual MLP, LayerNorm, GELU, dropout 0.05"],
         ["DNN parameters", "330,112", "Small enough for real-time CPU inference"],
-        ["Training", "Adam, MSE loss", "70/15/15 train/validation/test split"],
+        ["Training", "30,000 samples, 40 epochs", "Adam, MSE loss, 70/15/15 split, best-validation checkpoint"],
         ["Equaliser", "MMSE < 15 dB, ZF ≥ 15 dB", "MMSE avoids noise boost at low SNR"],
-        ["Tests", "80 automated tests", "pytest; frontend builds with TypeScript"],
+        ["Tests", "83 automated tests", "pytest; frontend builds with TypeScript"],
     ]
     story.append(booktabs(rows, [W * 0.2, W * 0.3, W * 0.5], zebra=True, align_center_from=99))
     story.append(P("Key Results", "h2"))
-    rows = [["Metric", "LS", "LMMSE*", "DNN"]]
+    rows = [["Metric", "LS", "LMMSE", "DNN"]]
     for snr in (0.0, 15.0, 30.0):
         rows.append([f"NMSE @ {snr:.0f} dB", fmt_nmse(rec["LS"][snr]), fmt_nmse(rec["MMSE"][snr]),
                      fmt_nmse(rec["DNN"][snr])])
@@ -196,8 +196,6 @@ def numbers_card(story, W):
     rows.append(["Mean latency", f"{lat['LS']['mean_ms']:.2f} ms", f"{lat['MMSE']['mean_ms']:.2f} ms",
                  f"{lat['DNN']['mean_ms']:.2f} ms"])
     story.append(booktabs(rows, [W * 0.28, W * 0.24, W * 0.24, W * 0.24], zebra=True))
-    story.append(P("* LMMSE has a known noise-scaling issue at low SNR; see Section 7 before quoting it.",
-                   "caption"))
     story.append(callout(
         "<b>How to read NMSE in dB:</b> −10 dB means the error power is 10% of the channel power; "
         "−20 dB means 1%; −30 dB means 0.1%. So −38.6 dB is about 0.014% error.", W))
@@ -403,8 +401,8 @@ QUESTIONS = [
     ]),
     ("Results", [
         ("Does the DNN beat LS?",
-         "At low SNR it matches LS (−8.4 dB at 0 dB). At high SNR it is worse: it levels off around "
-         "−25 dB while LS keeps improving to −38.6 dB. I report this honestly rather than hiding it."),
+         "At low SNR it is slightly better than LS (−8.7 dB vs −8.4 dB at 0 dB) and close to LMMSE (−9.1 dB). "
+         "At high SNR it is worse: it levels off around −25 dB while LS keeps improving to −38.6 dB. I report this honestly rather than hiding it."),
         ("Why does the DNN have an error floor at high SNR?",
          "One small network is trained over the whole 0–30 dB range, so it learns an average amount of "
          "denoising. At high SNR the LS estimate is already very accurate and the network's own approximation "
@@ -414,7 +412,7 @@ QUESTIONS = [
          "In Rayleigh fading some frames hit deep fades, so BER only falls about linearly with SNR. With "
          "15 frames per point a few bad channels dominate the errors."),
         ("Is it fast enough for real systems?",
-         "Mean latency is about 0.12 ms for LS, 0.35 ms for LMMSE and 0.49 ms for the DNN per frame on a CPU, "
+         "Mean latency is about 0.1 ms for LS, 0.4 ms for LMMSE and 0.65 ms for the DNN per frame on a CPU, "
          "all well below a 1 ms 5G slot. On a GPU or with batching the DNN would be faster."),
         ("What happens with fewer pilots?",
          "With 2 pilots per antenna the channel (4 taps) is under-sampled and every estimator fails (about "
@@ -456,33 +454,42 @@ def weaknesses(story, W):
     story.append(P(
         "A good examiner looks for the weak spots. Knowing them and explaining them is a strength."))
 
-    story.append(P("7.1 LMMSE is worse than LS at low SNR", "h2"))
-    story.append(P(
-        "<b>What the professor may notice:</b> theory says LMMSE should be best at low SNR, but your "
-        "results show LMMSE at −4.0 dB and LS at −8.4 dB at 0 dB SNR."))
-    story.append(P(
-        "<b>The cause (verified):</b> the receiver averages each pilot over the 14 OFDM symbols of the frame, "
-        "which reduces the pilot noise 14 times (about 11.5 dB). The LMMSE filter is still given the "
-        "un-averaged noise variance σ² instead of σ²/14, so it assumes far more noise "
-        "than there is and over-smooths the estimate. At high SNR the noise term is tiny, so both agree."))
-    rows = [["SNR", "LS", "LMMSE (current)", "LMMSE with σ²/14"]]
-    rows += [
-        ["0 dB", "−8.54 dB", "−4.16 dB", "−9.39 dB"],
-        ["10 dB", "−18.54 dB", "−14.10 dB", "−18.66 dB"],
-        ["20 dB", "−28.54 dB", "−27.30 dB", "−28.56 dB"],
-        ["30 dB", "−38.54 dB", "−38.40 dB", "−38.55 dB"],
-    ]
-    story.append(booktabs(rows, [W * 0.16, W * 0.26, W * 0.29, W * 0.29], zebra=True))
-    story.append(P("Quick check: 40 frames per SNR point, seed 42 (slightly different trial count from the "
-                   "saved results).", "caption"))
-    story.append(callout(
-        "<b>What to say:</b> “I found that my LMMSE implementation used the noise variance before pilot "
-        "averaging over the 14 symbols. With the correct value σ²/14 it becomes the best estimator "
-        "at low SNR, −9.4 dB against −8.5 dB for LS, as theory predicts. The gain is small because "
-        "with 4 pilots and 4 taps the DFT-based LS estimate is already efficient.”", W,
-        fill="#FFF6E5", edge="#E0A030"))
+    sweep = load("snr_sweep_results.json")
+    rec = {a: by_snr(r) for a, r in sweep["records"].items()}
+    # LMMSE NMSE from the saved results before the noise-scaling fix
+    lmmse_before = {0.0: "\u22124.01 dB", 10.0: "\u221214.71 dB", 20.0: "\u221227.30 dB", 30.0: "\u221238.41 dB"}
 
-    story.append(P("7.2 Other weaknesses", "h2"))
+    story.append(P("7.1 The LMMSE bug you found and fixed", "h2"))
+    story.append(P(
+        "<b>What happened:</b> earlier results showed LMMSE <i>worse</i> than LS at low SNR (\u22124.0 dB "
+        "against \u22128.4 dB at 0 dB), which contradicts theory. If the professor has seen older slides "
+        "or PDFs, be ready to explain."))
+    story.append(P(
+        "<b>The cause:</b> the receiver averages each pilot over the 14 OFDM symbols of the frame, which "
+        "reduces the pilot noise 14 times (about 11.5 dB). The LMMSE filter was given the un-averaged noise "
+        "variance \u03c3\u00b2 instead of \u03c3\u00b2/14, so it assumed far more noise than there was "
+        "and over-smoothed the estimate. <b>The fix</b> passes \u03c3\u00b2/14 to the estimators (the "
+        "equaliser still uses \u03c3\u00b2, because data symbols are not averaged), with a regression test."))
+    rows = [["SNR", "LS", "LMMSE before fix", "LMMSE after fix"]]
+    for snr in (0.0, 10.0, 20.0, 30.0):
+        rows.append([f"{snr:.0f} dB", fmt_nmse(rec["LS"][snr]), lmmse_before[snr], fmt_nmse(rec["MMSE"][snr])])
+    story.append(booktabs(rows, [W * 0.16, W * 0.26, W * 0.29, W * 0.29], zebra=True))
+    story.append(P("Saved results, 15 trials per SNR point, seed 42.", "caption"))
+    story.append(callout(
+        "<b>What to say:</b> \u201cI found that my LMMSE used the noise variance before pilot averaging over "
+        "the 14 symbols. With the correct value \u03c3\u00b2/14 it is now the best estimator at low SNR, "
+        f"{fmt_nmse(rec['MMSE'][0.0])} against {fmt_nmse(rec['LS'][0.0])} for LS at 0 dB, as theory "
+        "predicts. The gain is small because with 4 pilots and 4 taps the DFT-based LS estimate is already "
+        "efficient.\u201d", W, fill="#FFF6E5", edge="#E0A030"))
+
+    story.append(P("7.2 The DNN model was retrained", "h2"))
+    story.append(P(
+        "The model file in the repository had been overwritten by a 2-epoch test model (an old test bug, "
+        "since fixed). It was retrained on 30,000 simulated channels (21,000 training, 4,500 validation, "
+        "4,500 test) for 40 epochs with batch size 128 and learning rate 0.001, keeping the checkpoint with "
+        "the best validation loss. All results and figures were then regenerated."))
+
+    story.append(P("7.3 Other weaknesses", "h2"))
     rows = [["Weakness", "Honest answer"]]
     rows += [
         ["DNN error floor at high SNR", "Explained in Section 6; SNR-aware input or per-SNR models would fix it."],

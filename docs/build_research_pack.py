@@ -446,8 +446,9 @@ def sample_paper(story, W):
         "of a 2×2 MIMO-OFDM link with 64 subcarriers and comb-type pilots. The network has 330,112 "
         f"parameters and is compared with LS and linear MMSE (LMMSE) on identical Rayleigh channel "
         f"realisations over 0–30 dB SNR, with {bits:,} bits per SNR point and 95% Wilson confidence "
-        f"intervals. At 0 dB the network reaches {fmt_nmse(rec['DNN'][0.0])} NMSE, matching LS "
-        f"({fmt_nmse(rec['LS'][0.0])}) and about 4.3 dB better than LMMSE ({fmt_nmse(rec['MMSE'][0.0])}). "
+        f"intervals. At 0 dB the network reaches {fmt_nmse(rec['DNN'][0.0])} NMSE, slightly better than LS "
+        f"({fmt_nmse(rec['LS'][0.0])}) and close to LMMSE ({fmt_nmse(rec['MMSE'][0.0])}) without using "
+        "channel statistics. "
         f"Above 15 dB it shows an error floor near {fmt_nmse(rec['DNN'][30.0])}, while LS reaches "
         f"{fmt_nmse(rec['LS'][30.0])} at 30 dB. Mean inference latency is {lat['DNN']['mean_ms']:.2f} ms "
         f"per frame on a CPU. We discuss the causes of the floor and directions to remove it.",
@@ -514,7 +515,8 @@ def sample_paper(story, W):
     story.append(P("Table 3: Estimation accuracy and bit error rate (Rayleigh, QPSK).", "caption"))
     story.append(figure("nmse_vs_snr.png", "Fig. 1: NMSE versus SNR for all estimators.", W * 0.6))
     story.append(P(
-        f"At low SNR the DNN denoises as well as LS and better than LMMSE, without channel statistics. "
+        f"At low SNR the DNN denoises slightly better than LS and approaches LMMSE, without channel "
+        f"statistics. "
         f"Above 15 dB its NMSE saturates near {fmt_nmse(rec['DNN'][30.0])}, so at 30 dB it makes "
         f"{rec['DNN'][30.0]['bit_errors']} bit errors against {rec['LS'][30.0]['bit_errors']} for LS. Mean "
         f"latency is {lat['LS']['mean_ms']:.2f} ms (LS), {lat['MMSE']['mean_ms']:.2f} ms (LMMSE) and "
@@ -525,7 +527,8 @@ def sample_paper(story, W):
 
     story.append(P("VI. Conclusion", "h2"))
     story.append(P(
-        "A small residual MLP matches LS and beats LMMSE at low SNR but has an error floor at high SNR when "
+        "A small residual MLP slightly beats LS and approaches LMMSE at low SNR but has an error floor at "
+        "high SNR when "
         "one model is trained across the whole SNR range. Future work: feed SNR as an input or train "
         f"per-SNR models, use 2D convolutional networks across time and frequency {cite('soltani', 'dong')}, "
         f"model Doppler with the Jakes spectrum {cite('jakes')}, and learn pilot placement "

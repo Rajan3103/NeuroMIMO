@@ -549,19 +549,21 @@ python docs/build_documentation.py
     dn30, ls30 = rec["DNN"][30.0], rec["LS"][30.0]
     story.append(P("Engineering Analysis", "h2"))
     story += bullets([
-        f"<b>Low SNR (0 dB):</b> the Residual DNN ({fmt_nmse(rec['DNN'][0.0])}) matches LS "
-        f"({fmt_nmse(rec['LS'][0.0])}) and is about 4.3 dB better than this LMMSE implementation "
-        f"({fmt_nmse(rec['MMSE'][0.0])}), without needing a channel covariance matrix or noise "
-        "power estimate at inference time.",
-        f"<b>Mid SNR (15 dB):</b> LS leads ({fmt_nmse(ls15)}), followed by the DNN ({fmt_nmse(dn15)}) "
-        f"and LMMSE ({fmt_nmse(mm15)}). BER differences are small: "
+        f"<b>Low SNR (0 dB):</b> LMMSE is best ({fmt_nmse(rec['MMSE'][0.0])}), as theory predicts. "
+        f"The Residual DNN ({fmt_nmse(rec['DNN'][0.0])}) is slightly better than LS "
+        f"({fmt_nmse(rec['LS'][0.0])}) and within "
+        f"{rec['DNN'][0.0]['nmse_db'] - rec['MMSE'][0.0]['nmse_db']:.1f} dB of LMMSE, without needing a "
+        "channel covariance matrix or noise power estimate at inference time.",
+        f"<b>Mid SNR (15 dB):</b> LMMSE ({fmt_nmse(mm15)}) and LS ({fmt_nmse(ls15)}) are nearly equal and "
+        f"ahead of the DNN ({fmt_nmse(dn15)}). BER differences are small: "
         f"{ls15['ber']:.4f} / {mm15['ber']:.4f} / {dn15['ber']:.4f}.",
         f"<b>High-SNR error floor (&gt; 20 dB):</b> the DNN saturates near {fmt_nmse(dn30)} at 30 dB, "
         f"whereas LS with DFT sinc interpolation keeps improving to {fmt_nmse(ls30)}. This comes "
         "from training one lightweight 4-layer MLP (330k parameters) across the whole 0–30 dB "
         f"range; at 30 dB the DNN makes {dn30['bit_errors']} bit errors versus {ls30['bit_errors']} for LS.",
-        "<b>Latency:</b> LS is the fastest estimator; LMMSE costs about 3× and the DNN about "
-        "4× the LS time, all well under 1 ms per frame on CPU.",
+        f"<b>Latency:</b> LS is the fastest estimator; LMMSE costs about "
+        f"{lat['MMSE']['mean_ms'] / lat['LS']['mean_ms']:.0f}× and the DNN about "
+        f"{lat['DNN']['mean_ms'] / lat['LS']['mean_ms']:.0f}× the LS time, all well under 1 ms per frame on CPU.",
         "<b>Statistical honesty:</b> every BER point carries a 95% Wilson score interval, and "
         "zero-error points are reported as an upper bound using the Poisson rule of three "
         "(3/N<sub>bits</sub>), never as a misleading 0.000.",
