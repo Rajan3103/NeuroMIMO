@@ -7,7 +7,7 @@ training loop with validation tracking, checkpoint persistence, and benchmark co
 
 import os
 import time
-from typing import Dict, Any, List, Tuple, Optional
+from typing import Dict, Any, List, Tuple, Optional, TYPE_CHECKING
 import numpy as np
 import torch
 import torch.nn as nn
@@ -22,12 +22,16 @@ from ..wireless.channel import WirelessChannel
 from ..wireless.modulation import get_modulator, generate_random_bits
 from ..evaluation.metrics import calculate_mse, calculate_nmse
 
+if TYPE_CHECKING:
+    from ..wireless.deepmimo import DeepMIMOChannelSet
+
 
 def generate_channel_dataset(
     num_samples: int = 1000,
     config: Optional[SimulationConfig] = None,
     snr_range: Tuple[float, float] = (0.0, 30.0),
     random_seed: int = 42,
+    channel_set: Optional["DeepMIMOChannelSet"] = None,
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
     """Generates synthetic MIMO-OFDM channel training dataset without ground-truth leakage.
 
@@ -44,6 +48,8 @@ def generate_channel_dataset(
         config: Simulation configuration (default 2x2 MIMO, 64-FFT, 4 taps).
         snr_range: Min and max SNR (dB) for uniformly sampled training noise.
         random_seed: Seed for reproducible generation.
+        channel_set: Optional DeepMIMO channels drawn instead of synthetic Rayleigh channels.
+            Pass a single user split (see DeepMIMOChannelSet.split) to avoid leakage.
 
     Returns:
         Tuple:
@@ -76,6 +82,7 @@ def generate_channel_dataset(
         fft_size=config.fft_size,
         channel_type=ChannelModelType.RAYLEIGH,
         random_seed=random_seed,
+        channel_set=channel_set,
     )
     modulator = get_modulator(ModulationType.QPSK)
     ls_estimator = LSEstimator()
