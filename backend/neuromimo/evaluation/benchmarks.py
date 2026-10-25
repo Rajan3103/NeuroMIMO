@@ -141,6 +141,7 @@ def benchmark_channel_estimators(
 
             # 4. Extract pilot observations and data tones
             rx_pilots_dict, rx_data = ofdm.extract_pilots_and_data(rx_freq)
+            pilot_noise_var = ofdm.pilot_noise_variance(noise_var, rx_freq.shape[1])
 
             # 5. Run each algorithm on the EXACT same observations
             for algo in algorithms:
@@ -162,7 +163,7 @@ def benchmark_channel_estimators(
                         tx_pilots=ofdm.known_pilots_per_tx,
                         pilot_indices=ofdm.pilot_indices_per_tx,
                         fft_size=config.fft_size,
-                        noise_var=noise_var,
+                        noise_var=pilot_noise_var,
                         num_rx=config.num_rx,
                         num_tx=config.num_tx,
                     )
@@ -172,7 +173,7 @@ def benchmark_channel_estimators(
                         tx_pilots=ofdm.known_pilots_per_tx,
                         pilot_indices=ofdm.pilot_indices_per_tx,
                         fft_size=config.fft_size,
-                        noise_var=noise_var,
+                        noise_var=pilot_noise_var,
                         num_rx=config.num_rx,
                         num_tx=config.num_tx,
                     )

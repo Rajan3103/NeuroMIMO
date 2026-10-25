@@ -146,6 +146,16 @@ class OFDMPipeline:
         freq_signal = np.fft.fft(time_samples, axis=-1, norm="ortho")
         return freq_signal
 
+    @staticmethod
+    def pilot_noise_variance(noise_var: float, num_ofdm_symbols: int) -> float:
+        """Noise variance of the pilot observations from extract_pilots_and_data.
+
+        Each pilot is averaged over the frame's OFDM symbols (block fading), which
+        divides the per-symbol noise variance by the number of symbols. Estimators
+        that weight by noise (LMMSE) must use this value, not the per-symbol one.
+        """
+        return noise_var / num_ofdm_symbols
+
     def extract_pilots_and_data(
         self,
         rx_freq: np.ndarray,

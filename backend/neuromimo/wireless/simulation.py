@@ -138,6 +138,7 @@ class MIMOSimulationPipeline:
 
         # Step 7: Pilot Extraction
         rx_pilots_dict, rx_data = self.ofdm.extract_pilots_and_data(rx_freq)
+        pilot_noise_var = self.ofdm.pilot_noise_variance(noise_var, rx_freq.shape[1])
 
         # Step 8: Channel Estimation
         est_start = time.perf_counter()
@@ -149,7 +150,7 @@ class MIMOSimulationPipeline:
                 tx_pilots=self.ofdm.known_pilots_per_tx,
                 pilot_indices=self.ofdm.pilot_indices_per_tx,
                 fft_size=self.config.fft_size,
-                noise_var=noise_var,
+                noise_var=pilot_noise_var,
                 num_rx=num_rx,
                 num_tx=num_tx,
             )
@@ -159,7 +160,7 @@ class MIMOSimulationPipeline:
                 tx_pilots=self.ofdm.known_pilots_per_tx,
                 pilot_indices=self.ofdm.pilot_indices_per_tx,
                 fft_size=self.config.fft_size,
-                noise_var=noise_var,
+                noise_var=pilot_noise_var,
                 num_rx=num_rx,
                 num_tx=num_tx,
             )
@@ -169,7 +170,7 @@ class MIMOSimulationPipeline:
                 tx_pilots=self.ofdm.known_pilots_per_tx,
                 pilot_indices=self.ofdm.pilot_indices_per_tx,
                 fft_size=self.config.fft_size,
-                noise_var=noise_var,
+                noise_var=pilot_noise_var,
                 num_rx=num_rx,
                 num_tx=num_tx,
             )
