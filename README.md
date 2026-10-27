@@ -161,7 +161,7 @@ $ .venv\Scripts\Activate.ps1
 # Install physical layer & ML dependencies
 $ pip install -r requirements.txt
 
-# Run full test suite (28 unit and API tests)
+# Run full test suite (83 unit and API tests)
 $ pytest backend/tests/ -v
 
 # Launch FastAPI core engine
@@ -171,7 +171,7 @@ $ uvicorn neuromimo.api.main:app --app-dir backend --host 0.0.0.0 --port 8000 --
 # INFO:     Started server process [8000]
 # INFO:     Waiting for application startup.
 # [Database] SQLite connected successfully to 'backend/data/experiments.db'.
-# [Model] PyTorch Residual DNN loaded from 'backend/models/neuromimo_dnn.pt' (362,560 params).
+# [Model] PyTorch Residual DNN loaded from 'backend/models/neuromimo_dnn.pt' (330,112 params).
 # INFO:     Application startup complete.
 # INFO:     Uvicorn running on http://0.0.0.0:8000 (Swagger docs at /docs)
 ```
@@ -203,19 +203,44 @@ All evaluations were executed over $15$ independent Monte Carlo channels per SNR
 
 | Metric / Scenario | Least Squares (LS) | Linear MMSE | PyTorch Residual DNN | Genie (Perfect CSI) |
 | :--- | :--- | :--- | :--- | :--- |
-| **NMSE @ 0 dB SNR** | $-8.38\text{ dB}$ | $-4.01\text{ dB}$ | **$-8.36\text{ dB}$** | $-\infty$ |
-| **NMSE @ 15 dB SNR** | $-23.09\text{ dB}$ | $-20.50\text{ dB}$ | **$-20.88\text{ dB}$** | $-\infty$ |
-| **NMSE @ 30 dB SNR** | $-38.64\text{ dB}$ | $-38.41\text{ dB}$ | **$-24.76\text{ dB}$** (Floor) | $-\infty$ |
-| **BER @ 0 dB SNR** | $0.2310$ (10,866 errs) | $0.2459$ (11,567 errs) | **$0.2318$** (10,904 errs) | $0.2064$ (9,710 errs) |
-| **BER @ 15 dB SNR** | $0.0307$ (1,443 errs) | $0.0328$ (1,541 errs) | **$0.0333$** (1,567 errs) | $0.0259$ (1,219 errs) |
-| **BER @ 25 dB SNR** | $0.00042$ (20 errs) | $< 6.4 \times 10^{-5}$ (0 errs) | **$< 6.4 \times 10^{-5}$** (0 errs) | $< 6.4 \times 10^{-5}$ (0 errs) |
-| **BER @ 30 dB SNR** | $0.0018$ (85 errs) | $0.0018$ (86 errs) | **$0.0066$** (311 errs) | $0.0017$ (82 errs) |
-| **Inference Latency** | **$0.12\text{ ms}$** | **$0.35\text{ ms}$** | **$0.38\text{ ms}$** | N/A |
+| **NMSE @ 0 dB SNR** | $-8.38\text{ dB}$ | $-9.05\text{ dB}$ | **$-8.67\text{ dB}$** | $-\infty$ |
+| **NMSE @ 15 dB SNR** | $-23.09\text{ dB}$ | $-23.19\text{ dB}$ | **$-19.56\text{ dB}$** | $-\infty$ |
+| **NMSE @ 30 dB SNR** | $-38.64\text{ dB}$ | $-38.64\text{ dB}$ | **$-25.96\text{ dB}$** (Floor) | $-\infty$ |
+| **BER @ 0 dB SNR** | $0.2310$ (10,866 errs) | $0.2309$ (10,860 errs) | **$0.2316$ (10,893 errs)** | $0.2064$ (9,710 errs) |
+| **BER @ 15 dB SNR** | $0.0307$ (1,443 errs) | $0.0306$ (1,438 errs) | **$0.0334$ (1,570 errs)** | $0.0259$ (1,219 errs) |
+| **BER @ 25 dB SNR** | $0.0067$ (314 errs) | $0.0067$ (317 errs) | **$0.0108$ (506 errs)** | $0.0054$ (252 errs) |
+| **BER @ 30 dB SNR** | $0.0018$ (85 errs) | $0.0018$ (85 errs) | **$0.0043$ (201 errs)** | $0.0017$ (82 errs) |
+| **Inference Latency** | **$0.12\text{ ms}$** | **$0.40\text{ ms}$** | **$0.65\text{ ms}$** | N/A |
 
 #### Key Scientific Takeaways:
-1. **Low-to-Mid SNR Parity**: PyTorch Residual DNN tracks theoretical MMSE estimation without requiring known channel covariance matrix $\mathbf{R}_{HH}$ or noise variance $\sigma_n^2$.
-2. **Residual Regression Floor**: Because the DNN is trained across a wide dynamic range $[0, 30]\text{ dB}$ with a lightweight MLP ($362\text{k}$ parameters), it exhibits a regression floor around $-24.8\text{ dB}$ at $30\text{ dB}$ SNR, while classical DFT sinc interpolation reaches $-38.6\text{ dB}$.
+1. **Low-SNR Behaviour**: LMMSE is best at 0 dB ($-9.05\text{ dB}$), as theory predicts. The PyTorch Residual DNN ($-8.67\text{ dB}$) is slightly better than LS ($-8.38\text{ dB}$) without requiring the channel covariance matrix $\mathbf{R}_{HH}$ or noise variance $\sigma_n^2$.
+2. **Residual Regression Floor**: Because the DNN is trained across a wide dynamic range $[0, 30]\text{ dB}$ with a lightweight MLP ($330\text{k}$ parameters), it levels off around $-26.0\text{ dB}$ at $30\text{ dB}$ SNR, while classical DFT sinc interpolation reaches $-38.6\text{ dB}$.
 3. **Statistical Confidence**: All zero-error regimes report 95% Wilson score confidence intervals and Poisson rule-of-three upper bounds ($3/N_{bits}$).
+
+---
+
+### 🛰️ `DEEPMIMO // RAY-TRACED CHANNELS`
+
+Besides its built-in Rayleigh channels, NeuroMIMO can train and benchmark on ray-traced channels from [DeepMIMO](https://deepmimo.net).
+
+1. Generate OFDM channels with DeepMIMO using **at least 2 antennas** at both the base station and the user, and **64 or more subcarriers**.
+2. Save the channel array, shaped `(users, rx_antennas, tx_antennas, subcarriers)`:
+   ```python
+   import numpy as np
+   # DeepMIMO v4:  channels = dataset.compute_channels(params)
+   # DeepMIMO v3:  channels = dataset[0]['user']['channel']
+   np.save("channels.npy", channels)
+   ```
+3. Benchmark LS, LMMSE, DNN and perfect CSI on those channels, or train a DNN on them:
+   ```bash
+   cd backend
+   python -m neuromimo.evaluation.deepmimo_cli channels.npy --trials 15
+   python -m neuromimo.estimation.train_cli --deepmimo channels.npy --output models/deepmimo_dnn.pt
+   ```
+
+The loader (`neuromimo/wireless/deepmimo.py`) keeps the first 2×2 antennas, picks 64 evenly spaced subcarriers, drops users with no propagation paths and normalises each channel to unit power. LMMSE uses the delay profile measured from the loaded channels, and training splits by user so no user appears in two splits. `.npz` and `.mat` files work too (`--key` picks the array).
+
+> Ray-traced channels can be longer than the 4 pilots per antenna can resolve, so expect an NMSE floor for every estimator when the delay spread is large.
 
 ---
 

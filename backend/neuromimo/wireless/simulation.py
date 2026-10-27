@@ -16,7 +16,7 @@ Executes complete transmission rounds:
 """
 
 import time
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, TYPE_CHECKING
 import numpy as np
 
 from ..config import (
@@ -41,11 +41,22 @@ from ..evaluation.metrics import (
     SimulationMetrics,
 )
 
+if TYPE_CHECKING:
+    from .deepmimo import DeepMIMOChannelSet
+
 
 class MIMOSimulationPipeline:
     """Orchestrates end-to-end physical-layer MIMO-OFDM simulation rounds."""
 
-    def __init__(self, config: SimulationConfig) -> None:
+    def __init__(
+        self,
+        config: SimulationConfig,
+        channel_set: Optional["DeepMIMOChannelSet"] = None,
+    ) -> None:
+        """Args:
+            config: Simulation parameters.
+            channel_set: Optional DeepMIMO channels that replace the synthetic channel model.
+        """
         self.config = config
         self.ofdm = OFDMPipeline(
             num_tx=config.num_tx,
@@ -60,6 +71,7 @@ class MIMOSimulationPipeline:
             fft_size=config.fft_size,
             channel_type=config.channel_model,
             random_seed=config.random_seed,
+            channel_set=channel_set,
         )
         self.modulator = get_modulator(config.modulation)
         self._init_estimator(config.algorithm)
@@ -72,7 +84,7 @@ class MIMOSimulationPipeline:
         elif algo == EstimationAlgorithm.MMSE or algo == "MMSE":
             self.estimator = MMSEEstimator(
                 channel_pdp=self.channel.pdp,
-                num_taps=self.config.num_channel_taps,
+                num_taps=len(self.channel.pdp),
             )
         elif algo == EstimationAlgorithm.DNN or algo == "DNN":
             self.estimator = DNNEstimator(
@@ -126,6 +138,7 @@ class MIMOSimulationPipeline:
 
         # Step 7: Pilot Extraction
         rx_pilots_dict, rx_data = self.ofdm.extract_pilots_and_data(rx_freq)
+        pilot_noise_var = self.ofdm.pilot_noise_variance(noise_var, rx_freq.shape[1])
 
         # Step 8: Channel Estimation
         est_start = time.perf_counter()
@@ -137,7 +150,7 @@ class MIMOSimulationPipeline:
                 tx_pilots=self.ofdm.known_pilots_per_tx,
                 pilot_indices=self.ofdm.pilot_indices_per_tx,
                 fft_size=self.config.fft_size,
-                noise_var=noise_var,
+                noise_var=pilot_noise_var,
                 num_rx=num_rx,
                 num_tx=num_tx,
             )
@@ -147,7 +160,7 @@ class MIMOSimulationPipeline:
                 tx_pilots=self.ofdm.known_pilots_per_tx,
                 pilot_indices=self.ofdm.pilot_indices_per_tx,
                 fft_size=self.config.fft_size,
-                noise_var=noise_var,
+                noise_var=pilot_noise_var,
                 num_rx=num_rx,
                 num_tx=num_tx,
             )
@@ -157,7 +170,7 @@ class MIMOSimulationPipeline:
                 tx_pilots=self.ofdm.known_pilots_per_tx,
                 pilot_indices=self.ofdm.pilot_indices_per_tx,
                 fft_size=self.config.fft_size,
-                noise_var=noise_var,
+                noise_var=pilot_noise_var,
                 num_rx=num_rx,
                 num_tx=num_tx,
             )

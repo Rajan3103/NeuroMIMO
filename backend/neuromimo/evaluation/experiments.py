@@ -170,6 +170,7 @@ class ExperimentRunner:
                 # 3. Channel propagation with calibrated AWGN
                 rx_freq, noise_var = channel.apply_channel(tx_freq, H_true, snr_db=snr)
                 rx_pilots_dict, rx_data = ofdm.extract_pilots_and_data(rx_freq)
+                pilot_noise_var = ofdm.pilot_noise_variance(noise_var, rx_freq.shape[1])
 
                 # 4. Evaluate each algorithm on identical observations
                 for algo in algorithms:
@@ -194,7 +195,7 @@ class ExperimentRunner:
                             ofdm.known_pilots_per_tx,
                             ofdm.pilot_indices_per_tx,
                             fft_size=64,
-                            noise_var=noise_var,
+                            noise_var=pilot_noise_var,
                             num_rx=2,
                             num_tx=2,
                         )
@@ -204,7 +205,7 @@ class ExperimentRunner:
                             ofdm.known_pilots_per_tx,
                             ofdm.pilot_indices_per_tx,
                             fft_size=64,
-                            noise_var=noise_var,
+                            noise_var=pilot_noise_var,
                             num_rx=2,
                             num_tx=2,
                         )
@@ -488,6 +489,7 @@ class ExperimentRunner:
         tx_freq = ofdm.assemble_mimo_frame(data_syms)
         rx_freq, noise_var = channel.apply_channel(tx_freq, H_true, snr_db=15.0)
         rx_pilots_dict, _ = ofdm.extract_pilots_and_data(rx_freq)
+        pilot_noise_var = ofdm.pilot_noise_variance(noise_var, rx_freq.shape[1])
 
         estimators: Dict[str, Any] = {
             "LS": LSEstimator(),
@@ -521,7 +523,7 @@ class ExperimentRunner:
                         ofdm.known_pilots_per_tx,
                         ofdm.pilot_indices_per_tx,
                         fft_size=64,
-                        noise_var=noise_var,
+                        noise_var=pilot_noise_var,
                         num_rx=2,
                         num_tx=2,
                     )
@@ -545,7 +547,7 @@ class ExperimentRunner:
                         ofdm.known_pilots_per_tx,
                         ofdm.pilot_indices_per_tx,
                         fft_size=64,
-                        noise_var=noise_var,
+                        noise_var=pilot_noise_var,
                         num_rx=2,
                         num_tx=2,
                     )

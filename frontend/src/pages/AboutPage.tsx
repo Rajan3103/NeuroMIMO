@@ -34,7 +34,7 @@ const RESULT_FIGURES: ResultFigure[] = [
     src: '/results/nmse_vs_snr.png',
     category: 'Accuracy',
     caption: 'Normalized Mean Squared Error comparison under multipath Rayleigh fading across SNR points 0 to 30 dB.',
-    takeaway: 'Residual DNN achieves +11.7 dB gain over LS at 20 dB SNR and tracks within 1.1 dB of linear MMSE.',
+    takeaway: 'At 0 dB LMMSE is best (-9.1 dB) and the DNN (-8.7 dB) slightly beats LS (-8.4 dB). Above 15 dB the DNN levels off near -25 dB while LS and LMMSE reach -38.6 dB at 30 dB.',
     badge: '105 Monte Carlo Trials',
   },
   {
@@ -44,7 +44,7 @@ const RESULT_FIGURES: ResultFigure[] = [
     src: '/results/ber_vs_snr.png',
     category: 'Recovery',
     caption: 'End-to-end BER after channel estimation and 2×2 MMSE spatial equalization with QPSK modulation.',
-    takeaway: 'Zero bit errors recorded at 25 dB and 30 dB (BER < 6.4 × 10⁻⁵ under Poisson rule of three upper bound).',
+    takeaway: 'LS and LMMSE reach BER 1.8 × 10⁻³ at 30 dB; the DNN high-SNR floor raises its BER to 4.3 × 10⁻³. Every point carries a 95% Wilson interval.',
     badge: 'Post-Equalization Recovery',
   },
   {
@@ -54,7 +54,7 @@ const RESULT_FIGURES: ResultFigure[] = [
     src: '/results/channel_model_comparison.png',
     category: 'Accuracy',
     caption: 'Performance comparison across frequency-flat AWGN versus 4-tap frequency-selective Rayleigh fading.',
-    takeaway: 'Demonstrates robust non-linear denoising resilience even under high delay spread frequency selectivity.',
+    takeaway: 'On flat AWGN the DNN tracks LS closely (-35.5 dB vs -38.6 dB at 30 dB); Rayleigh multipath exposes its high-SNR floor.',
     badge: 'AWGN vs Rayleigh Multipath',
   },
   {
@@ -64,7 +64,7 @@ const RESULT_FIGURES: ResultFigure[] = [
     src: '/results/generalization_evaluation.png',
     category: 'Accuracy',
     caption: 'Evaluation on channel realizations excluded from training and perturbed power-delay profile decay constants.',
-    takeaway: 'The learned residual mapping exhibits stable generalization without catastrophic degradation under moderate distribution shift.',
+    takeaway: 'At 15 dB the DNN drops from -22.7 dB in-distribution to -18.5 dB when the delay-profile decay changes to 2.5, while LS and LMMSE stay near -24 dB.',
     badge: 'Held-Out Realizations',
   },
   {
@@ -74,7 +74,7 @@ const RESULT_FIGURES: ResultFigure[] = [
     src: '/results/inference_runtime.png',
     category: 'Complexity',
     caption: 'Per-frame computational runtime benchmark comparing PyTorch tensor operations against LS and MMSE matrix inversion.',
-    takeaway: 'Average DNN inference latency < 0.4 ms, well within real-time 5G NR TTI time slot deadlines (1.0 ms).',
+    takeaway: 'Mean latency per frame on CPU: LS 0.12 ms, LMMSE 0.40 ms, DNN 0.65 ms, all within a 1 ms 5G NR slot.',
     badge: 'ms / OFDM Frame',
   },
   {
@@ -84,7 +84,7 @@ const RESULT_FIGURES: ResultFigure[] = [
     src: '/results/pilot_density_comparison.png',
     category: 'Complexity',
     caption: 'Estimation NMSE scaling as a function of comb pilot subcarrier spacing (4, 8, and 16 tones).',
-    takeaway: 'DNN demonstrates superior interpolation stability over LS when pilot overhead is reduced from 25% to 12.5%.',
+    takeaway: 'With 2 pilots per antenna (spacing 16) every estimator fails (about -4 dB NMSE): a 4-tap channel needs at least 4 pilots.',
     badge: 'Overhead Trade-off',
   },
 ];
@@ -290,9 +290,9 @@ export const AboutPage: React.FC = () => {
             <tbody className="divide-y border-slate-800/60 font-mono text-[11px]">
               <tr className="text-slate-300">
                 <td className="py-2.5 font-sans font-semibold text-white">NMSE at 20 dB SNR</td>
-                <td className="py-2.5 text-orange-400">-28.2 dB</td>
-                <td className="py-2.5 text-emerald-400">-40.8 dB</td>
-                <td className="py-2.5 text-purple-400 font-bold">-39.9 dB (+11.7 dB gain over LS)</td>
+                <td className="py-2.5 text-orange-400">-28.95 dB</td>
+                <td className="py-2.5 text-emerald-400">-28.93 dB</td>
+                <td className="py-2.5 text-purple-400 font-bold">-25.31 dB</td>
               </tr>
               <tr className="text-slate-300">
                 <td className="py-2.5 font-sans font-semibold text-white">Prior CSI Statistics Needed</td>
@@ -302,15 +302,15 @@ export const AboutPage: React.FC = () => {
               </tr>
               <tr className="text-slate-300">
                 <td className="py-2.5 font-sans font-semibold text-white">BER at 25 dB SNR (QPSK)</td>
-                <td className="py-2.5 text-orange-400">4.2 × 10⁻⁴</td>
-                <td className="py-2.5 text-emerald-400">&lt; 6.4 × 10⁻⁵</td>
-                <td className="py-2.5 text-purple-400 font-bold">&lt; 6.4 × 10⁻⁵ (0 errors observed)</td>
+                <td className="py-2.5 text-orange-400">6.7 × 10⁻³</td>
+                <td className="py-2.5 text-emerald-400">6.7 × 10⁻³</td>
+                <td className="py-2.5 text-purple-400 font-bold">1.1 × 10⁻²</td>
               </tr>
               <tr className="text-slate-300">
                 <td className="py-2.5 font-sans font-semibold text-white">Inference Latency</td>
-                <td className="py-2.5 text-slate-400">0.15 ms</td>
-                <td className="py-2.5 text-slate-400">0.42 ms</td>
-                <td className="py-2.5 text-slate-400">0.38 ms</td>
+                <td className="py-2.5 text-slate-400">0.12 ms</td>
+                <td className="py-2.5 text-slate-400">0.40 ms</td>
+                <td className="py-2.5 text-slate-400">0.65 ms</td>
               </tr>
             </tbody>
           </table>

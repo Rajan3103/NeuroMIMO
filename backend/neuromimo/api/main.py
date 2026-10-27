@@ -621,6 +621,7 @@ async def predict_channel(request: ModelPredictRequest) -> ModelPredictResponse:
     tx_freq = ofdm.assemble_mimo_frame(dummy_payload)
     rx_freq, noise_var = channel.apply_channel(tx_freq, H_true, snr_db=request.snr_db)
     rx_pilots_dict, _ = ofdm.extract_pilots_and_data(rx_freq)
+    pilot_noise_var = ofdm.pilot_noise_variance(noise_var, rx_freq.shape[1])
 
     t0 = time.perf_counter()
     H_est = estimator.estimate(
@@ -628,7 +629,7 @@ async def predict_channel(request: ModelPredictRequest) -> ModelPredictResponse:
         tx_pilots=ofdm.known_pilots_per_tx,
         pilot_indices=ofdm.pilot_indices_per_tx,
         fft_size=64,
-        noise_var=noise_var,
+        noise_var=pilot_noise_var,
         num_rx=2,
         num_tx=2,
     )

@@ -5,9 +5,12 @@ computes deterministic ground truth Channel Frequency Responses (CFR) H[k],
 and injects complex Additive White Gaussian Noise (AWGN) calibrated to target SNR.
 """
 
-from typing import Tuple, Optional
+from typing import Tuple, Optional, TYPE_CHECKING
 import numpy as np
 from ..config import ChannelModelType
+
+if TYPE_CHECKING:
+    from .deepmimo import DeepMIMOChannelSet
 
 
 class WirelessChannel:
@@ -22,6 +25,7 @@ class WirelessChannel:
         channel_type: ChannelModelType = ChannelModelType.RAYLEIGH,
         pdp_decay: float = 1.5,
         random_seed: Optional[int] = None,
+        channel_set: Optional["DeepMIMOChannelSet"] = None,
     ) -> None:
         self.num_tx = num_tx
         self.num_rx = num_rx
@@ -36,6 +40,18 @@ class WirelessChannel:
         pdp_raw = np.exp(-taps / self.pdp_decay)
         self.pdp = pdp_raw / np.sum(pdp_raw)  # Normalized total power per link = 1.0
 
+        # External (e.g. DeepMIMO ray-traced) channels replace the synthetic model,
+        # and their measured delay profile replaces the exponential one
+        self.channel_set = channel_set
+        if channel_set is not None:
+            if (channel_set.num_rx, channel_set.num_tx, channel_set.fft_size) != (num_rx, num_tx, fft_size):
+                raise ValueError(
+                    "Channel set dimensions do not match the simulation "
+                    f"({channel_set.num_rx}x{channel_set.num_tx}x{channel_set.fft_size} vs "
+                    f"{num_rx}x{num_tx}x{fft_size})."
+                )
+            self.pdp = channel_set.estimate_pdp()
+
     def generate_channel_response(self) -> Tuple[np.ndarray, np.ndarray]:
         """Generates ground truth Channel Impulse Response (CIR) and Channel Frequency Response (CFR).
 
@@ -44,6 +60,11 @@ class WirelessChannel:
                 - h_time: Shape (num_rx, num_tx, num_taps) complex CIR
                 - H_freq: Shape (num_rx, num_tx, fft_size) complex CFR (Deterministic Ground Truth)
         """
+        if self.channel_set is not None:
+            H_freq = self.channel_set.sample(self.rng)
+            h_time = np.fft.ifft(H_freq, axis=-1)
+            return h_time, H_freq
+
         if self.channel_type == ChannelModelType.AWGN:
             # Identity flat channel across antennas (spatial channels uncoupled)
             h_time = np.zeros((self.num_rx, self.num_tx, self.num_taps), dtype=np.complex128)

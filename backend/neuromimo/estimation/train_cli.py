@@ -3,6 +3,7 @@
 import os
 import sys
 import argparse
+from typing import Optional
 import torch
 from torch.utils.data import TensorDataset, DataLoader
 
@@ -18,6 +19,7 @@ from neuromimo.estimation.trainer import (
     ChannelEstimationTrainer,
 )
 from neuromimo.estimation.dnn import DEFAULT_CHECKPOINT_PATH
+from neuromimo.wireless.deepmimo import DeepMIMOChannelSet
 
 
 def run_training(
@@ -27,6 +29,8 @@ def run_training(
     learning_rate: float = 0.003,
     checkpoint_path: str = DEFAULT_CHECKPOINT_PATH,
     random_seed: int = 42,
+    deepmimo_path: Optional[str] = None,
+    deepmimo_key: Optional[str] = None,
 ):
     print("=" * 60)
     print("NeuroMIMO PyTorch DNN Channel Estimator Training Pipeline")
@@ -36,18 +40,40 @@ def run_training(
     print(f"Random Seed: {random_seed} | Checkpoint Destination: {checkpoint_path}")
     print("-" * 60)
 
-    print("Step 1/4: Generating synthetic MIMO-OFDM dataset...")
-    X, Y, snrs = generate_channel_dataset(
-        num_samples=num_samples,
-        snr_range=(0.0, 30.0),
-        random_seed=random_seed,
-    )
-    print(f"Generated feature matrix X: {X.shape}, target matrix Y: {Y.shape}")
+    if deepmimo_path:
+        # Split DeepMIMO users first, so no user's channel appears in two splits
+        print(f"Step 1/4: Loading DeepMIMO channels from {deepmimo_path}...")
+        channel_set = DeepMIMOChannelSet.from_file(deepmimo_path, key=deepmimo_key)
+        print(f"Loaded {channel_set.num_channels} channels "
+              f"({channel_set.num_dropped_users} users without paths dropped)")
+        user_splits = channel_set.split(train_ratio=0.70, val_ratio=0.15, random_seed=random_seed)
+        sample_counts = (int(num_samples * 0.70), int(num_samples * 0.15))
+        sample_counts += (num_samples - sum(sample_counts),)
 
-    print("Step 2/4: Splitting dataset (70% Train, 15% Val, 15% Test)...")
-    (X_tr, Y_tr), (X_val, Y_val), (X_te, Y_te) = split_dataset(
-        X, Y, train_ratio=0.70, val_ratio=0.15, random_seed=random_seed
-    )
+        print("Step 2/4: Generating train/val/test samples from separate DeepMIMO users...")
+        splits = []
+        for offset, (users, count) in enumerate(zip(user_splits, sample_counts)):
+            X_part, Y_part, _ = generate_channel_dataset(
+                num_samples=count,
+                snr_range=(0.0, 30.0),
+                random_seed=random_seed + offset,
+                channel_set=users,
+            )
+            splits.append((X_part, Y_part))
+        (X_tr, Y_tr), (X_val, Y_val), (X_te, Y_te) = splits
+    else:
+        print("Step 1/4: Generating synthetic MIMO-OFDM dataset...")
+        X, Y, snrs = generate_channel_dataset(
+            num_samples=num_samples,
+            snr_range=(0.0, 30.0),
+            random_seed=random_seed,
+        )
+        print(f"Generated feature matrix X: {X.shape}, target matrix Y: {Y.shape}")
+
+        print("Step 2/4: Splitting dataset (70% Train, 15% Val, 15% Test)...")
+        (X_tr, Y_tr), (X_val, Y_val), (X_te, Y_te) = split_dataset(
+            X, Y, train_ratio=0.70, val_ratio=0.15, random_seed=random_seed
+        )
     print(f"Train samples: {len(X_tr)} | Val samples: {len(X_val)} | Test samples: {len(X_te)}")
 
     tr_ds = TensorDataset(torch.from_numpy(X_tr), torch.from_numpy(Y_tr))
@@ -92,6 +118,10 @@ if __name__ == "__main__":
     parser.add_argument("--lr", type=float, default=0.003)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--output", type=str, default=DEFAULT_CHECKPOINT_PATH)
+    parser.add_argument("--deepmimo", type=str, default=None,
+                        help="Train on DeepMIMO channels from this .npy/.npz/.mat file.")
+    parser.add_argument("--deepmimo-key", type=str, default=None,
+                        help="Array name inside a .npz or .mat DeepMIMO file.")
     args = parser.parse_args()
 
     run_training(
@@ -101,4 +131,6 @@ if __name__ == "__main__":
         learning_rate=args.lr,
         checkpoint_path=args.output,
         random_seed=args.seed,
+        deepmimo_path=args.deepmimo,
+        deepmimo_key=args.deepmimo_key,
     )

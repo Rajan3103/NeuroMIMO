@@ -235,7 +235,7 @@ export const ModelTrainingPage: React.FC<ModelTrainingPageProps> = ({
         />
         <StatCard
           title="Trainable Parameters"
-          value={modelStatus?.parameters_count ? modelStatus.parameters_count.toLocaleString() : '362,496'}
+          value={modelStatus?.parameters_count ? modelStatus.parameters_count.toLocaleString() : '330,112'}
           subtitle="Weights + Biases in PyTorch"
           icon={Cpu}
           variant="cyan"

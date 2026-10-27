@@ -279,10 +279,10 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
                 <h4 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors">
                   Channel Estimation NMSE vs SNR
                 </h4>
-                <Badge variant="purple">+11.7 dB Gain</Badge>
+                <Badge variant="purple">0–30 dB Sweep</Badge>
               </div>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                Supervised PyTorch Residual DNN denoises LS pilot observations, tracking within 1.1 dB of linear MMSE without requiring true channel covariance knowledge.
+                LMMSE is best at low SNR; the residual DNN slightly beats LS there without channel covariance knowledge, but levels off near -25 dB at high SNR.
               </p>
             </div>
           </div>
@@ -308,7 +308,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
                 <h4 className="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">
                   Bit Error Rate (BER) vs SNR
                 </h4>
-                <Badge variant="green">Zero Errors at 25 dB</Badge>
+                <Badge variant="green">95% Wilson Intervals</Badge>
               </div>
               <p className="text-[11px] text-slate-400 leading-relaxed">
                 End-to-end signal recovery after MMSE spatial equalization. Residual DNN eliminates error floors present in conventional LS estimation.
