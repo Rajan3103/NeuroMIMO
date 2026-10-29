@@ -161,7 +161,7 @@ $ .venv\Scripts\Activate.ps1
 # Install physical layer & ML dependencies
 $ pip install -r requirements.txt
 
-# Run full test suite (83 unit and API tests)
+# Run full test suite (85 unit and API tests)
 $ pytest backend/tests/ -v
 
 # Launch FastAPI core engine
