@@ -311,7 +311,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
                 <Badge variant="green">95% Wilson Intervals</Badge>
               </div>
               <p className="text-[11px] text-slate-400 leading-relaxed">
-                End-to-end signal recovery after MMSE spatial equalization. Residual DNN eliminates error floors present in conventional LS estimation.
+                End-to-end bit errors after MIMO equalization, with 95% Wilson confidence intervals. The DNN's high-SNR estimation floor raises its BER above LS at 25-30 dB.
               </p>
             </div>
           </div>

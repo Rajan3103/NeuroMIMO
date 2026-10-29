@@ -278,3 +278,21 @@ class TestExperimentRunnerSmoke:
         plot_path = runner.plot_pilot_density_comparison(res, "test_pilot_density.png")
         assert os.path.exists(plot_path)
         assert os.path.getsize(plot_path) > 1000
+
+
+def test_count_symbol_errors_counts_symbols_with_any_wrong_bit():
+    from neuromimo.evaluation.metrics import count_symbol_errors
+
+    tx = np.array([[0, 0, 1, 1, 0, 1, 1, 0]])
+    rx = np.array([[0, 1, 1, 1, 1, 0, 1, 0]])  # symbols 0 and 2 wrong (symbol 2 has two wrong bits)
+    assert count_symbol_errors(tx, rx, bits_per_symbol=2) == 2
+
+
+def test_simulation_ser_matches_symbol_error_count():
+    from neuromimo.config import SimulationConfig
+    from neuromimo.wireless.simulation import MIMOSimulationPipeline
+
+    res = MIMOSimulationPipeline(SimulationConfig(snr_db=20.0)).run_single_shot()
+    assert res["ser"] == res["symbol_errors"] / res["total_symbols"]
+    # A symbol error flips at least one and at most two QPSK bits
+    assert res["bit_errors"] / 2 <= res["symbol_errors"] <= res["bit_errors"]

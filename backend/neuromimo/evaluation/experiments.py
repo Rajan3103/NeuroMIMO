@@ -44,7 +44,7 @@ from .metrics import (
     calculate_nmse,
     calculate_nmse_db,
     calculate_ber,
-    calculate_ser,
+    count_symbol_errors,
     compute_confidence_interval_ber,
 )
 
@@ -230,9 +230,7 @@ class ExperimentRunner:
                         rec_bits[t] = modulator.demodulate(rx_eq[t].flatten())
 
                     bit_errs = int(np.count_nonzero(tx_bits.flatten() != rec_bits.flatten()))
-                    sym_errs = int(
-                        np.count_nonzero(np.abs(tx_data_symbols.flatten() - rx_eq.flatten()) > 0.5)
-                    )
+                    sym_errs = count_symbol_errors(tx_bits, rec_bits, modulator.bits_per_symbol)
 
                     accumulators[algo]["mse_acc"] += mse
                     accumulators[algo]["nmse_acc"] += nmse

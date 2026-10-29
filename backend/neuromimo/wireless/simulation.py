@@ -37,7 +37,7 @@ from ..evaluation.metrics import (
     calculate_mse,
     calculate_nmse,
     calculate_ber,
-    calculate_ser,
+    count_symbol_errors,
     SimulationMetrics,
 )
 
@@ -207,13 +207,9 @@ class MIMOSimulationPipeline:
         ber = calculate_ber(tx_bits, recovered_bits)
         bit_errors = int(np.count_nonzero(tx_bits.flatten() != recovered_bits.flatten()))
 
-        ser = calculate_ser(tx_data_symbols, equalized_data_symbols)
-        symbol_errors = int(
-            np.count_nonzero(
-                np.abs(tx_data_symbols.flatten() - equalized_data_symbols.flatten()) > 0.5
-            )
-        )
+        symbol_errors = count_symbol_errors(tx_bits, recovered_bits, bits_per_sym)
         total_symbols = tx_data_symbols.size
+        ser = symbol_errors / total_symbols
 
         exec_time_ms = (time.perf_counter() - start_time) * 1000.0
 
