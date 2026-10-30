@@ -22,7 +22,7 @@ from ..evaluation.metrics import (
     calculate_mse,
     calculate_nmse,
     calculate_ber,
-    calculate_ser,
+    count_symbol_errors,
 )
 
 
@@ -198,7 +198,7 @@ def benchmark_channel_estimators(
                     rec_bits[t] = modulator.demodulate(rx_eq[t].flatten())
 
                 ber = calculate_ber(tx_bits, rec_bits)
-                ser = calculate_ser(tx_data_symbols, rx_eq)
+                ser = count_symbol_errors(tx_bits, rec_bits, modulator.bits_per_symbol) / tx_data_symbols.size
 
                 algo_metrics[algo]["nmse"] += nmse
                 algo_metrics[algo]["ber"] += ber

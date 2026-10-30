@@ -125,6 +125,18 @@ def compute_confidence_interval_ber(
     }
 
 
+def count_symbol_errors(bits_true: np.ndarray, bits_est: np.ndarray, bits_per_symbol: int) -> int:
+    """Counts detected symbols with at least one wrong bit (hard-decision symbol errors).
+
+    Args:
+        bits_true: Transmitted bits, shape (num_tx, num_bits) or flat.
+        bits_est: Recovered bits with the same shape.
+        bits_per_symbol: Bits carried by one modulation symbol (2 for QPSK, 4 for 16-QAM).
+    """
+    wrong = np.asarray(bits_true).reshape(-1, bits_per_symbol) != np.asarray(bits_est).reshape(-1, bits_per_symbol)
+    return int(np.count_nonzero(np.any(wrong, axis=1)))
+
+
 def calculate_ser(symbols_true: np.ndarray, symbols_est: np.ndarray, threshold: float = 1e-3) -> float:
     """Calculates Symbol Error Rate (SER)."""
     s_t = np.asarray(symbols_true).flatten()

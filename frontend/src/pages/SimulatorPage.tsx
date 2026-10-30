@@ -565,7 +565,7 @@ export const SimulatorPage: React.FC = () => {
                     NMSE vs SNR Reference Curve
                   </h5>
                   <p className="text-[10px] text-slate-400 leading-relaxed">
-                    Evaluates estimation error. PyTorch Residual DNN achieves +11.7 dB NMSE gain over LS at 20 dB SNR.
+                    Estimation error across 0-30 dB: LMMSE is best at low SNR, the DNN slightly beats LS there, and LS/LMMSE lead at high SNR.
                   </p>
                 </div>
               </div>
