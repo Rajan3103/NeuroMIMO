@@ -85,6 +85,12 @@ CORS_ORIGINS = [
     ).split(",")
     if origin.strip()
 ]
+# The trained network's input size fixes it to 2x2 MIMO with 64 subcarriers
+DNN_SUPPORTED_SHAPE = (2, 2, 64)
+DNN_SHAPE_MESSAGE = (
+    "The trained DNN supports 2x2 MIMO with 64 subcarriers only. "
+    "Choose LS, LMMSE or Perfect CSI for other antenna or FFT settings."
+)
 RESULTS_DIR = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "results")
 )
@@ -359,6 +365,12 @@ async def run_simulation(request: SimulationRunRequest) -> SimulationRunResponse
             ),
         )
 
+    if algo_str == "DNN" and (request.num_tx, request.num_rx, request.fft_size) != DNN_SUPPORTED_SHAPE:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=DNN_SHAPE_MESSAGE,
+        )
+
     if request.cp_length >= request.fft_size:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -426,6 +438,12 @@ async def compare_estimation_algorithms(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Trained DNN model checkpoint not found. Please train the model or benchmark LS/MMSE only.",
+        )
+
+    if "DNN" in normalized_algos and request.fft_size != DNN_SUPPORTED_SHAPE[2]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=DNN_SHAPE_MESSAGE,
         )
 
     mod_str = request.modulation.upper()

@@ -365,3 +365,19 @@ def test_api_experiment_plots_image_serving():
 def test_api_experiment_plots_not_found():
     response = client.get("/api/experiments/latest/plots/non_existent_plot.png")
     assert response.status_code == 404
+
+
+@pytest.mark.parametrize("override", [{"fft_size": 128}, {"num_tx": 4, "num_rx": 4}])
+def test_api_simulation_dnn_rejects_unsupported_shape(override):
+    payload = {"snr_db": 20.0, "algorithm": "DNN", "modulation": "QPSK", "channel_model": "RAYLEIGH", **override}
+    response = client.post("/api/simulation/run", json=payload)
+    assert response.status_code == 400
+    assert "2x2 MIMO with 64 subcarriers" in response.json()["detail"]
+
+
+def test_api_compare_dnn_rejects_unsupported_fft_size():
+    response = client.post(
+        "/api/estimation/compare",
+        json={"snr_db": 15.0, "algorithms": ["LS", "DNN"], "fft_size": 128},
+    )
+    assert response.status_code == 400
