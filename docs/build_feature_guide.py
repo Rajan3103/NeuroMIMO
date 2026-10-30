@@ -378,7 +378,7 @@ def backend_features(story, W, rec):
          f"Loads realistic ray-traced channels: {mono('python -m neuromimo.evaluation.deepmimo_cli channels.npy')} "
          "benchmarks all estimators on them, and train_cli --deepmimo trains on them with a by-user split."),
         ("Automated tests",
-         f"85 tests ({mono('python -m pytest backend/tests -q')}) check the modulation, OFDM, channels, "
+         f"88 tests ({mono('python -m pytest backend/tests -q')}) check the modulation, OFDM, channels, "
          "estimators, metrics, API, DeepMIMO loader and that LMMSE beats LS at low SNR."),
         ("Documentation",
          "Generated PDFs in docs/: project documentation, problem–solution–working, explainer with "

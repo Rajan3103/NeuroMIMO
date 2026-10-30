@@ -453,7 +453,7 @@ def results(story, W, rec, lat):
         "range cannot match LS when the noise is tiny.",
         f"<b>Speed:</b> LS {lat['LS']['mean_ms']:.2f} ms, LMMSE {lat['MMSE']['mean_ms']:.2f} ms, DNN "
         f"{lat['DNN']['mean_ms']:.2f} ms per frame on a CPU, all well inside a 1 ms 5G slot.",
-        "<b>Reliability:</b> every result is reproducible from fixed seeds and covered by 85 automated tests.",
+        "<b>Reliability:</b> every result is reproducible from fixed seeds and covered by 88 automated tests.",
     ])
 
     story.append(P("Problems found and fixed during the project", "h2"))

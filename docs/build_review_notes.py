@@ -153,7 +153,7 @@ def talk(story, W):
         ("Minute 5 — Insight and future work",
          "The floor comes from training one small network over the whole SNR range. Fixes: give the SNR to the "
          "network as an input, use a CNN over time and frequency, and test realistic ray-traced channels, "
-         "which I have started with a DeepMIMO loader. The software is tested with 85 automated tests."),
+         "which I have started with a DeepMIMO loader. The software is tested with 88 automated tests."),
     ]
     for title, text in parts:
         story.append(KeepTogether([P(title, "h2"), Paragraph(text, S["say"])]))
@@ -183,7 +183,7 @@ def numbers_card(story, W):
         ["DNN parameters", "330,112", "Small enough for real-time CPU inference"],
         ["Training", "30,000 samples, 40 epochs", "Adam, MSE loss, 70/15/15 split, best-validation checkpoint"],
         ["Equaliser", "MMSE < 15 dB, ZF ≥ 15 dB", "MMSE avoids noise boost at low SNR"],
-        ["Tests", "85 automated tests", "pytest; frontend builds with TypeScript"],
+        ["Tests", "88 automated tests", "pytest; frontend builds with TypeScript"],
     ]
     story.append(booktabs(rows, [W * 0.2, W * 0.3, W * 0.5], zebra=True, align_center_from=99))
     story.append(P("Key Results", "h2"))
